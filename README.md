@@ -117,6 +117,18 @@ https://ai-usage-cards-swart.vercel.app/api/usage-card?username=YOUR_USERNAME&gi
 Your gist id is safe to share — it only exposes the same numbers the card already shows.
 Keep the token private.
 
+Usage and combined card options:
+
+| Parameter | Values | Default | Notes |
+|---|---|---|---|
+| `username` | GitHub login | *(required)* | |
+| `gist` | your gist id | *(required)* | |
+| `providers` | e.g. `claude-code,codex` | all | Show only the AI tools you actually use — totals, heatmap, and monthly bars all follow the filter |
+| `theme` | `light`, `dark`, `dim` | `light` | |
+
+The card leads with your **all-time total**, the **current month**, and a **month-by-month
+breakdown** of the last six months.
+
 **Step 5 — Automate it** so the card stays fresh:
 
 <details>

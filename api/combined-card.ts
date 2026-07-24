@@ -6,14 +6,16 @@ import { GithubError } from '../src/github/client.js';
 import { renderCombinedCard } from '../src/render/combined-card.js';
 import { renderErrorCard, renderUsageEmptyCard } from '../src/render/error-card.js';
 import { resolveTheme } from '../src/render/themes.js';
-import { fetchUsageData } from '../src/usage/fetch-usage-data.js';
-import type { UsageData } from '../src/usage/types.js';
+import { fetchUsageSources } from '../src/usage/fetch-usage-data.js';
+import { mergeSources } from '../src/usage/merge.js';
+import type { UsageSourceFile } from '../src/usage/types.js';
+import { parseProviders } from './usage-card.js';
 
 const USERNAME_RE = /^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}$/i;
 const GIST_RE = /^[0-9a-f]{5,64}$/i;
 
 const outcomeCache = new TtlCache<CardData>(10 * 60 * 1000);
-const usageCache = new TtlCache<UsageData>(10 * 60 * 1000);
+const usageCache = new TtlCache<UsageSourceFile[]>(10 * 60 * 1000);
 
 const CACHE_OK = 'public, max-age=300, s-maxage=3600, stale-while-revalidate=86400';
 const CACHE_NOT_FOUND = 'public, max-age=60, s-maxage=300';
@@ -41,9 +43,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
   }
 
   const token = process.env.GITHUB_TOKEN;
+  const providers = parseProviders(first(req.query.providers));
   const [outcomeResult, usageResult] = await Promise.allSettled([
     outcomeCache.getOrCompute(username.toLowerCase(), () => fetchCardData(username, { token })),
-    usageCache.getOrCompute(gistId.toLowerCase(), () => fetchUsageData(gistId, { token })),
+    usageCache.getOrCompute(gistId.toLowerCase(), () => fetchUsageSources(gistId, { token })),
   ]);
 
   if (outcomeResult.status === 'rejected' || usageResult.status === 'rejected') {
@@ -60,7 +63,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
     return;
   }
 
-  const usage = usageResult.value;
+  const usage = mergeSources(usageResult.value, providers);
   const svg =
     usage.days.size === 0
       ? renderUsageEmptyCard(username, theme)
