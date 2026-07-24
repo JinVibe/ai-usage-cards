@@ -192,6 +192,39 @@ shipping funnel (what came out).
 https://ai-usage-cards-swart.vercel.app/api/combined-card?username=YOUR_USERNAME&gist=YOUR_GIST_ID&theme=dark
 ```
 
+## The AI buddy — a mascot that grows with you
+
+An original sparkle creature that levels up with your total recorded tokens — five
+evolution stages from a lone **Spark** to a crowned **Nova**. Sized to sit right beside
+the other cards.
+
+| Lv.1 Spark | Lv.2 Ember | Lv.3 Circuit | Lv.4 Dynamo | Lv.5 Nova |
+|---|---|---|---|---|
+| ![lv1](docs/buddy-lv1.svg) | ![lv2](docs/buddy-lv2.svg) | ![lv3](docs/buddy-lv3.svg) | ![lv4](docs/buddy-lv4.svg) | ![lv5](docs/buddy-lv5.svg) |
+
+```
+https://ai-usage-cards-swart.vercel.app/api/buddy-card?username=YOUR_USERNAME&gist=YOUR_GIST_ID&theme=dark
+```
+
+Takes the same `providers` filter — your buddy can grow on Claude tokens only, if that's
+how you roll.
+
+## 🤖 Let your AI agent set everything up
+
+Using Claude Code, Codex, or another coding agent? Paste this and it will do the whole
+setup for you (this repo also ships an [AGENTS.md](AGENTS.md) they can follow):
+
+```text
+Read https://github.com/JinVibe/ai-usage-cards and set up my AI usage cards:
+1. I'll give you a GitHub token with only the `gist` scope
+   (from https://github.com/settings/tokens/new?scopes=gist) — ask me for it.
+2. Create a secret gist with it, then download and run collector/collect.mjs
+   with AIUC_GIST_ID / AIUC_GIST_TOKEN / AIUC_SOURCE_ID.
+3. Schedule the collector to run daily on this machine.
+4. Give me ready-to-paste <picture> snippets for the usage card and buddy card
+   (ask me which AI providers to show), and offer to add them to my profile README.
+```
+
 ## Supported AI agents
 
 Claude, GitHub Copilot, OpenAI Codex, Gemini, Cursor, Devin, Aider — anything that signs
