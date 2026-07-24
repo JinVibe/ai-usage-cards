@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="244" viewBox="0 0 240 244" role="img" aria-label="octocat&apos;s AI buddy: level 3 Circuit, 22M tokens" font-family="'Segoe UI', Ubuntu, Helvetica, Arial, sans-serif">
+  <style>
+    .fade { opacity: 0; animation: fadeUp 0.5s ease-out forwards; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+    @media (prefers-reduced-motion: reduce) { .fade { opacity: 1; animation: none; } }
+  </style>
+  <rect x="0.5" y="0.5" width="239" height="243" rx="8" fill="#0d1117" stroke="#30363d"/>
+  <text class="fade" x="120" y="32" text-anchor="middle" font-size="13" font-weight="600" fill="#58a6ff">octocat · AI buddy</text>
+  <g class="fade" style="animation-delay:150ms" transform="translate(120, 106)">
+      
+      <line x1="0" y1="-37" x2="0" y2="-25" stroke="#58a6ff" stroke-width="2"/>
+      <g transform="translate(0, -39)"><path transform="translate(-6.3, -6.3) scale(0.9)" d="M7 0 L8.6 5.4 L14 7 L8.6 8.6 L7 14 L5.4 8.6 L0 7 L5.4 5.4 Z" fill="#58a6ff" fill-opacity="1"/></g>
+      <rect x="-31" y="-25" width="62" height="54" rx="12" fill="#58a6ff" fill-opacity="0.16" stroke="#58a6ff" stroke-width="1.5"/>
+      <circle cx="-11" cy="-2" r="4" fill="#58a6ff"/><circle cx="11" cy="-2" r="4" fill="#58a6ff"/>
+      <path d="M-8 12 Q0 18 8 12" fill="none" stroke="#58a6ff" stroke-width="2" stroke-linecap="round"/>
+      <ellipse cx="0" cy="44" rx="26" ry="4" fill="#58a6ff" fill-opacity="0.12"/></g>
+  <text class="fade" style="animation-delay:300ms" x="120" y="176" text-anchor="middle" font-size="14" font-weight="700" fill="#58a6ff">Lv.3 · Circuit</text>
+  <text class="fade" style="animation-delay:350ms" x="120" y="193" text-anchor="middle" font-size="10" fill="#8b949e">22M tokens</text>
+  <g class="fade" style="animation-delay:400ms">
+    <rect x="44" y="201" width="152" height="5" rx="2.5" fill="#58a6ff" fill-opacity="0.12"/>
+    <rect x="44" y="201" width="46" height="5" rx="2.5" fill="#58a6ff" fill-opacity="0.6"/>
+    <text x="120" y="218" text-anchor="middle" font-size="8" fill="#8b949e">28M to Lv.4</text>
+  </g>
+  <a href="https://github.com/JinVibe/ai-usage-cards" target="_blank">
+    <text x="216" y="230" text-anchor="end" font-size="9" fill="#8b949e" fill-opacity="0.8">made with ai-usage-cards</text>
+  </a>
+</svg>

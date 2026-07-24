@@ -43,17 +43,23 @@ function sparkle(theme: Theme): string {
  * animation (disabled under prefers-reduced-motion). GitHub's camo proxy
  * serves SVGs as <img>, where CSS animations still run.
  */
-export function cardShell(theme: Theme, height: number, body: string, ariaLabel: string): string {
+export function cardShell(
+  theme: Theme,
+  height: number,
+  body: string,
+  ariaLabel: string,
+  width: number = CARD_WIDTH,
+): string {
   const footerY = height - 14;
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="${CARD_WIDTH}" height="${height}" viewBox="0 0 ${CARD_WIDTH} ${height}" role="img" aria-label="${escapeXml(ariaLabel)}" font-family="${FONT_FAMILY}">
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" role="img" aria-label="${escapeXml(ariaLabel)}" font-family="${FONT_FAMILY}">
   <style>
     .fade { opacity: 0; animation: fadeUp 0.5s ease-out forwards; }
     @keyframes fadeUp { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
     @media (prefers-reduced-motion: reduce) { .fade { opacity: 1; animation: none; } }
   </style>
-  <rect x="0.5" y="0.5" width="${CARD_WIDTH - 1}" height="${height - 1}" rx="8" fill="${theme.bg}" stroke="${theme.border}"/>${body}
+  <rect x="0.5" y="0.5" width="${width - 1}" height="${height - 1}" rx="8" fill="${theme.bg}" stroke="${theme.border}"/>${body}
   <a href="${PROJECT_URL}" target="_blank">
-    <text x="${CARD_WIDTH - CARD_PADDING}" y="${footerY}" text-anchor="end" font-size="9" fill="${theme.muted}" fill-opacity="0.8">made with ai-usage-cards</text>
+    <text x="${width - CARD_PADDING}" y="${footerY}" text-anchor="end" font-size="9" fill="${theme.muted}" fill-opacity="0.8">made with ai-usage-cards</text>
   </a>
 </svg>`;
 }
