@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="450" height="254" viewBox="0 0 450 254" role="img" aria-label="octocat: at least 42 AI-assisted commits, at least 17 merged PRs, 3 releases" font-family="'Segoe UI', Ubuntu, Helvetica, Arial, sans-serif">
+  <rect x="0.5" y="0.5" width="449" height="253" rx="6" fill="#0d1117" stroke="#30363d"/>
+  <text x="24" y="33" font-size="14" font-weight="600" fill="#58a6ff">octocat · directed AI to ship</text>
+    <text x="91" y="86" text-anchor="middle" font-size="22" font-weight="700" fill="#c9d1d9">≥42</text>
+    <text x="91" y="108" text-anchor="middle" font-size="10" fill="#8b949e">AI-assisted commits</text>
+    <text x="225" y="86" text-anchor="middle" font-size="22" font-weight="700" fill="#c9d1d9">≥17</text>
+    <text x="225" y="108" text-anchor="middle" font-size="10" fill="#8b949e">merged PRs</text>
+    <text x="359" y="86" text-anchor="middle" font-size="22" font-weight="700" fill="#c9d1d9">3</text>
+    <text x="359" y="108" text-anchor="middle" font-size="10" fill="#8b949e">releases</text>
+    <text x="158" y="79" text-anchor="middle" font-size="14" fill="#8b949e">→</text>
+    <text x="292" y="79" text-anchor="middle" font-size="14" fill="#8b949e">→</text>
+    <text x="24" y="152" font-size="11" fill="#8b949e">▸ <tspan fill="#58a6ff" font-weight="600">spark-app</tspan><tspan fill="#c9d1d9"> — shipped v1.2.0 · ≥20 AI-assisted commits</tspan></text>
+    <text x="24" y="178" font-size="11" fill="#8b949e">▸ <tspan fill="#58a6ff" font-weight="600">tiny-lib</tspan><tspan fill="#c9d1d9"> · ≥9 AI-assisted commits</tspan></text>
+    <text x="24" y="204" font-size="11" fill="#8b949e">▸ <tspan fill="#58a6ff" font-weight="600">cli-tools</tspan><tspan fill="#c9d1d9"> — shipped v0.3.1 · ≥6 AI-assisted commits</tspan></text>
+  <a href="https://github.com/JinVibe/ai-usage-cards" target="_blank">
+    <text x="426" y="240" text-anchor="end" font-size="9" fill="#8b949e">made with ai-usage-cards</text>
+  </a>
+</svg>

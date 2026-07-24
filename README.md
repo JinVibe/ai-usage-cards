@@ -4,8 +4,8 @@
 
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://ai-usage-cards.vercel.app/api/card?username=octocat&modules=funnel,repos&theme=dark">
-    <img src="https://ai-usage-cards.vercel.app/api/card?username=octocat&modules=funnel,repos&theme=light" alt="AI-assisted shipping stats">
+    <source media="(prefers-color-scheme: dark)" srcset="docs/demo-dark.svg">
+    <img src="docs/demo-light.svg" alt="AI-assisted shipping stats card">
   </picture>
 </p>
 
@@ -15,7 +15,7 @@ aggregates them into an outcome funnel: **commits → merged PRs → releases**.
 
 ## Quick start
 
-1. Open the [card builder](https://ai-usage-cards.vercel.app) and type your GitHub username.
+1. Open the [card builder](https://ai-usage-cards-swart.vercel.app) and type your GitHub username.
 2. Click **Copy markdown**.
 3. Paste into your README. Done — light/dark switches automatically.
 
@@ -23,8 +23,8 @@ Or paste this directly, replacing `YOUR_USERNAME`:
 
 ```html
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://ai-usage-cards.vercel.app/api/card?username=YOUR_USERNAME&theme=dark">
-  <img src="https://ai-usage-cards.vercel.app/api/card?username=YOUR_USERNAME&theme=light" alt="AI-assisted shipping stats">
+  <source media="(prefers-color-scheme: dark)" srcset="https://ai-usage-cards-swart.vercel.app/api/card?username=YOUR_USERNAME&theme=dark">
+  <img src="https://ai-usage-cards-swart.vercel.app/api/card?username=YOUR_USERNAME&theme=light" alt="AI-assisted shipping stats">
 </picture>
 ```
 
@@ -43,7 +43,7 @@ Or paste this directly, replacing `YOUR_USERNAME`:
 
 | `light` | `dark` | `dim` |
 |---|---|---|
-| ![light](https://ai-usage-cards.vercel.app/api/card?username=octocat&theme=light) | ![dark](https://ai-usage-cards.vercel.app/api/card?username=octocat&theme=dark) | ![dim](https://ai-usage-cards.vercel.app/api/card?username=octocat&theme=dim) |
+| ![light](docs/theme-light.svg) | ![dark](docs/theme-dark.svg) | ![dim](docs/theme-dim.svg) |
 
 New themes are welcome — add a token record in [`src/render/themes.ts`](src/render/themes.ts) (single-hue, please).
 
