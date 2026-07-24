@@ -83,6 +83,10 @@ npm run typecheck
 npm run dev       # vercel dev
 ```
 
+## Contributing
+
+Theme and agent-signature PRs are the fastest way in — see [CONTRIBUTING.md](CONTRIBUTING.md).
+
 ## License
 
 [MIT](LICENSE)
