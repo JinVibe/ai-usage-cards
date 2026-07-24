@@ -95,6 +95,22 @@ no conflicts, and source names are never shown on the card. The collector wraps
 [ccusage](https://github.com/ryoppippi/ccusage), which reads local logs from Claude Code,
 Codex CLI, Gemini CLI, Copilot CLI, and more (`AIUC_CMD` / `AIUC_PROVIDER` to customize).
 
+## The combined card — effort → outcome
+
+One card that tells the whole story: the usage heatmap (what you put in) stacked with the
+shipping funnel (what came out).
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/combined-dark.svg">
+    <img src="docs/combined-light.svg" alt="Combined effort and outcome card">
+  </picture>
+</p>
+
+```
+https://ai-usage-cards-swart.vercel.app/api/combined-card?username=YOUR_USERNAME&gist=YOUR_GIST_ID&theme=dark
+```
+
 ## Supported AI agents
 
 Claude, GitHub Copilot, OpenAI Codex, Gemini, Cursor, Devin, Aider — anything that signs

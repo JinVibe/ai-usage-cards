@@ -8,8 +8,8 @@ import type { Theme } from './themes.js';
 const WEEKS = 26;
 const CELL = 10;
 const CELL_GAP = 2;
-const GRID_WIDTH = WEEKS * (CELL + CELL_GAP) - CELL_GAP; // 310
-const GRID_HEIGHT = 7 * (CELL + CELL_GAP) - CELL_GAP; // 82
+export const GRID_WIDTH = WEEKS * (CELL + CELL_GAP) - CELL_GAP; // 310
+export const GRID_HEIGHT = 7 * (CELL + CELL_GAP) - CELL_GAP; // 82
 
 const SUMMARY_HEIGHT = 26;
 const HEATMAP_BLOCK = GRID_HEIGHT + 14;
@@ -35,7 +35,7 @@ function providerLabel(provider: string): string {
   return PROVIDER_LABELS[provider] ?? provider;
 }
 
-function summaryLine(data: UsageData, now: Date): string {
+export function summaryLine(data: UsageData, now: Date): string {
   const month = monthTotals(data, now);
   const streak = currentStreak(data, now);
   const parts: string[] = [];
@@ -45,7 +45,7 @@ function summaryLine(data: UsageData, now: Date): string {
   return `This month: ${parts.join(' · ')}`;
 }
 
-function renderHeatmap(data: UsageData, theme: Theme, x: number, y: number, now: Date): string {
+export function renderHeatmap(data: UsageData, theme: Theme, x: number, y: number, now: Date): string {
   const grid = heatmapGrid(data, now, WEEKS);
   const cells: string[] = [];
   grid.forEach((column, w) => {
