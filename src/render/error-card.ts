@@ -8,9 +8,9 @@ const TEXT_BUDGET = CARD_WIDTH - CARD_PADDING * 2;
 
 function messageCard(theme: Theme, title: string, headline: string, hint: string): string {
   const body = `
-  <text x="${CARD_PADDING}" y="33" font-size="14" font-weight="600" fill="${theme.title}">${escapeXml(truncateToWidth(title, TEXT_BUDGET, 14))}</text>
-  <text x="${CARD_PADDING}" y="66" font-size="12" fill="${theme.text}">${escapeXml(truncateToWidth(headline, TEXT_BUDGET, 12))}</text>
-  <text x="${CARD_PADDING}" y="86" font-size="10" fill="${theme.muted}">${escapeXml(truncateToWidth(hint, TEXT_BUDGET, 10))}</text>`;
+  <text class="fade" x="${CARD_PADDING}" y="33" font-size="14" font-weight="600" fill="${theme.title}">${escapeXml(truncateToWidth(title, TEXT_BUDGET, 14))}</text>
+  <text class="fade" style="animation-delay:120ms" x="${CARD_PADDING}" y="66" font-size="12" fill="${theme.text}">${escapeXml(truncateToWidth(headline, TEXT_BUDGET, 12))}</text>
+  <text class="fade" style="animation-delay:240ms" x="${CARD_PADDING}" y="86" font-size="10" fill="${theme.muted}">${escapeXml(truncateToWidth(hint, TEXT_BUDGET, 10))}</text>`;
   return cardShell(theme, MESSAGE_CARD_HEIGHT, body, headline);
 }
 
