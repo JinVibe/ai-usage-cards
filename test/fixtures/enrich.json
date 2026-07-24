@@ -1,0 +1,21 @@
+{
+  "data": {
+    "r0": {
+      "releases": { "totalCount": 2 },
+      "latestRelease": { "tagName": "v1.2.0" },
+      "c0": {
+        "associatedPullRequests": { "nodes": [{ "number": 41, "merged": true }] }
+      },
+      "c1": {
+        "associatedPullRequests": { "nodes": [{ "number": 41, "merged": true }] }
+      }
+    },
+    "r1": {
+      "releases": { "totalCount": 0 },
+      "latestRelease": null,
+      "c0": {
+        "associatedPullRequests": { "nodes": [{ "number": 7, "merged": false }] }
+      }
+    }
+  }
+}

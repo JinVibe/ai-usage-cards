@@ -1,0 +1,30 @@
+{
+  "total_count": 3,
+  "incomplete_results": false,
+  "items": [
+    {
+      "sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "commit": {
+        "message": "feat: add caching\n\nCo-Authored-By: Claude <noreply@anthropic.com>",
+        "author": { "date": "2026-07-20T10:00:00Z" }
+      },
+      "repository": { "full_name": "octo/app", "private": false }
+    },
+    {
+      "sha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "commit": {
+        "message": "fix: pair-programmed fix\n\nCo-authored-by: Jane Doe <jane@example.com>",
+        "author": { "date": "2026-07-19T10:00:00Z" }
+      },
+      "repository": { "full_name": "octo/app", "private": false }
+    },
+    {
+      "sha": "cccccccccccccccccccccccccccccccccccccccc",
+      "commit": {
+        "message": "feat: agent work\n\nCo-authored-by: Copilot <175728472+Copilot@users.noreply.github.com>",
+        "author": { "date": "2026-07-18T10:00:00Z" }
+      },
+      "repository": { "full_name": "octo/lib", "private": false }
+    }
+  ]
+}
