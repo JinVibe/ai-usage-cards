@@ -1,0 +1,11 @@
+# Working design doc — intentionally not committed
+DESIGN.md
+
+node_modules/
+dist/
+coverage/
+.vercel/
+.env
+.env.*
+*.local
+*.tsbuildinfo
