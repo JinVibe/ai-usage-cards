@@ -21,15 +21,58 @@ import { execSync } from 'node:child_process';
 
 const SCHEMA_VERSION = 1;
 
-/** Normalizes `ccusage daily --json` output to v1 daily entries. */
+/** Maps a model id to a provider id; unrecognized models get the fallback. */
+export function providerOfModel(model, fallback) {
+  if (/gemini/i.test(model)) return 'gemini-cli';
+  if (/claude|opus|sonnet|haiku|fable/i.test(model)) return 'claude-code';
+  if (/gpt|codex|^o\d/i.test(model)) return 'codex';
+  return fallback;
+}
+
+/**
+ * Normalizes `ccusage daily --json` output to v1 daily entries. Handles both
+ * the current shape (`period` + unified multi-agent rows) and the older
+ * `date` field. When model breakdowns are present, tokens are split per
+ * provider by model id so the card's tool-share bar stays accurate.
+ */
 export function normalizeCcusageDaily(report, provider) {
   const rows = Array.isArray(report?.daily) ? report.daily : [];
   const entries = [];
   for (const row of rows) {
-    if (typeof row?.date !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(row.date)) continue;
+    const date = typeof row?.period === 'string' ? row.period : row?.date;
+    if (typeof date !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(date)) continue;
+
+    const breakdowns = Array.isArray(row.modelBreakdowns) ? row.modelBreakdowns : [];
+    if (breakdowns.length > 0) {
+      const byProvider = new Map();
+      for (const b of breakdowns) {
+        if (typeof b?.modelName !== 'string') continue;
+        const p = providerOfModel(b.modelName, provider);
+        const agg = byProvider.get(p) ?? { input: 0, output: 0, topModel: '', topTokens: -1 };
+        const tokens = toCount(b.inputTokens) + toCount(b.outputTokens);
+        agg.input += toCount(b.inputTokens);
+        agg.output += toCount(b.outputTokens);
+        if (tokens > agg.topTokens) {
+          agg.topTokens = tokens;
+          agg.topModel = shortModelName(b.modelName);
+        }
+        byProvider.set(p, agg);
+      }
+      for (const [p, agg] of byProvider) {
+        entries.push({
+          date,
+          provider: p,
+          input_tokens: agg.input,
+          output_tokens: agg.output,
+          top_model: agg.topModel || undefined,
+        });
+      }
+      continue;
+    }
+
     const models = Array.isArray(row.modelsUsed) ? row.modelsUsed : [];
     entries.push({
-      date: row.date,
+      date,
       provider,
       input_tokens: toCount(row.inputTokens),
       output_tokens: toCount(row.outputTokens),

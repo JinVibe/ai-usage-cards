@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 // @ts-expect-error — plain-JS collector script, exports tested here
-import { normalizeCcusageDaily, shortModelName } from '../collector/collect.mjs';
+import { normalizeCcusageDaily, providerOfModel, shortModelName } from '../collector/collect.mjs';
 import { parseSourceFile } from '../src/usage/merge.js';
 
 const ccusageReport = {
@@ -48,6 +48,57 @@ describe('normalizeCcusageDaily', () => {
   it('handles an empty or malformed report', () => {
     expect(normalizeCcusageDaily({}, 'claude-code')).toEqual([]);
     expect(normalizeCcusageDaily(null, 'claude-code')).toEqual([]);
+  });
+});
+
+describe('normalizeCcusageDaily with the current period-based shape', () => {
+  const modernReport = {
+    daily: [
+      {
+        period: '2026-07-24',
+        agent: 'all',
+        inputTokens: 50000,
+        outputTokens: 6000,
+        totalCost: 1.23,
+        modelsUsed: ['claude-fable-5', 'gemini-3-flash-preview'],
+        modelBreakdowns: [
+          { modelName: 'claude-fable-5', inputTokens: 40000, outputTokens: 5000, cost: 1.1 },
+          { modelName: 'gemini-3-flash-preview', inputTokens: 10000, outputTokens: 1000, cost: 0.13 },
+        ],
+      },
+    ],
+  };
+
+  it('reads period dates and splits providers by model', () => {
+    const entries = normalizeCcusageDaily(modernReport, 'claude-code');
+    expect(entries).toHaveLength(2);
+    expect(entries).toContainEqual({
+      date: '2026-07-24',
+      provider: 'claude-code',
+      input_tokens: 40000,
+      output_tokens: 5000,
+      top_model: 'fable',
+    });
+    expect(entries).toContainEqual({
+      date: '2026-07-24',
+      provider: 'gemini-cli',
+      input_tokens: 10000,
+      output_tokens: 1000,
+      top_model: 'gemini-3-flash-preview',
+    });
+  });
+
+  it('still never carries cost through', () => {
+    expect(JSON.stringify(normalizeCcusageDaily(modernReport, 'claude-code'))).not.toMatch(/cost/i);
+  });
+});
+
+describe('providerOfModel', () => {
+  it('classifies known model families', () => {
+    expect(providerOfModel('claude-opus-4-8', 'x')).toBe('claude-code');
+    expect(providerOfModel('gemini-3-flash-preview', 'x')).toBe('gemini-cli');
+    expect(providerOfModel('gpt-5-codex', 'x')).toBe('codex');
+    expect(providerOfModel('mystery-model', 'fallback')).toBe('fallback');
   });
 });
 
