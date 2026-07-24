@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ai-usage-cards — card builder</title>
+  <meta name="description" content="Build your AI-assisted shipping card and embed it in your GitHub README in seconds." />
+  <style>
+    :root {
+      --bg: #ffffff; --text: #24292f; --muted: #6e7781;
+      --border: #d0d7de; --accent: #0969da; --panel: #f6f8fa;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0d1117; --text: #c9d1d9; --muted: #8b949e;
+        --border: #30363d; --accent: #58a6ff; --panel: #161b22;
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font: 15px/1.6 'Segoe UI', Ubuntu, Helvetica, Arial, sans-serif;
+      display: flex; justify-content: center; padding: 40px 16px;
+    }
+    main { width: 100%; max-width: 640px; }
+    h1 { font-size: 24px; margin: 0 0 4px; }
+    .tagline { color: var(--muted); margin: 0 0 28px; }
+    .row { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 16px; align-items: center; }
+    label { font-size: 13px; color: var(--muted); }
+    input[type="text"] {
+      flex: 1; min-width: 220px; padding: 8px 12px; font-size: 15px;
+      background: var(--bg); color: var(--text);
+      border: 1px solid var(--border); border-radius: 6px; outline: none;
+    }
+    input[type="text"]:focus { border-color: var(--accent); }
+    select {
+      padding: 8px 10px; font-size: 14px; background: var(--bg); color: var(--text);
+      border: 1px solid var(--border); border-radius: 6px;
+    }
+    .check { display: inline-flex; gap: 6px; align-items: center; font-size: 14px; color: var(--text); }
+    .preview {
+      background: var(--panel); border: 1px solid var(--border); border-radius: 8px;
+      padding: 24px; display: flex; justify-content: center; min-height: 160px;
+      align-items: center; margin-bottom: 16px;
+    }
+    .preview img { max-width: 100%; }
+    .preview .placeholder { color: var(--muted); font-size: 14px; }
+    pre {
+      background: var(--panel); border: 1px solid var(--border); border-radius: 8px;
+      padding: 16px; overflow-x: auto; font-size: 12.5px; white-space: pre-wrap;
+      word-break: break-all; margin: 0 0 12px;
+    }
+    button {
+      padding: 8px 16px; font-size: 14px; font-weight: 600; cursor: pointer;
+      background: var(--accent); color: #fff; border: none; border-radius: 6px;
+    }
+    button:disabled { opacity: 0.5; cursor: default; }
+    footer { margin-top: 32px; font-size: 13px; color: var(--muted); }
+    footer a { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>ai-usage-cards</h1>
+    <p class="tagline">The AI-era contribution graph — show what you shipped with AI, straight from your public git history.</p>
+
+    <div class="row">
+      <input id="username" type="text" placeholder="Your GitHub username" autocomplete="off" spellcheck="false" autofocus />
+      <select id="theme" aria-label="Theme">
+        <option value="light">light</option>
+        <option value="dark">dark</option>
+        <option value="dim">dim</option>
+      </select>
+      <label class="check"><input id="repos" type="checkbox" /> repo case cards</label>
+    </div>
+
+    <div class="preview" id="preview">
+      <span class="placeholder">Type your username to preview your card</span>
+    </div>
+
+    <pre id="snippet" hidden></pre>
+    <button id="copy" hidden>Copy markdown</button>
+
+    <footer>
+      Auto light/dark: the snippet uses <code>&lt;picture&gt;</code> so GitHub picks the right theme.
+      · <a href="https://github.com/JinVibe/ai-usage-cards">GitHub</a>
+    </footer>
+  </main>
+  <script src="/builder.js"></script>
+</body>
+</html>
