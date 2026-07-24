@@ -58,6 +58,43 @@ Honesty first — the numbers are framed as **"at least N"** because:
 What is never shown: emails (matched internally, never rendered), token counts, costs,
 or any leaderboard. This card shows *what you shipped with AI* — not how much AI you consumed.
 
+## Show your usage too — the heatmap card
+
+The outcome funnel is only half the story. The **usage card** is the AI-era contribution
+graph itself: a heatmap of your actual daily AI usage across Claude Code, Codex, Gemini CLI,
+and friends — with streaks, monthly totals, and a tool-share bar.
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/usage-dark.svg">
+    <img src="docs/usage-light.svg" alt="AI usage heatmap card">
+  </picture>
+</p>
+
+Usage data lives only on your machines, so a tiny collector uploads **numeric summaries
+only** (dates, token counts, sessions, top model — never project names, file paths,
+prompts, or costs) to a gist you own:
+
+1. Create a [gist](https://gist.github.com) (secret is fine, any placeholder content) and note its id.
+2. Create a [PAT](https://github.com/settings/tokens/new?scopes=gist&description=ai-usage-cards) with only the `gist` scope.
+3. On each machine, run the collector (needs Node 20+ and your AI CLI logs):
+
+```bash
+curl -fsSLO https://raw.githubusercontent.com/JinVibe/ai-usage-cards/main/collector/collect.mjs
+AIUC_GIST_ID=<gist-id> AIUC_GIST_TOKEN=<pat> AIUC_SOURCE_ID=my-laptop node collect.mjs
+```
+
+4. Re-run it on a schedule (cron, Task Scheduler, or a Claude Code hook) and embed:
+
+```
+https://ai-usage-cards-swart.vercel.app/api/usage-card?username=YOUR_USERNAME&gist=YOUR_GIST_ID&theme=dark
+```
+
+Each machine gets its own `AIUC_SOURCE_ID` and updates only its own file in the gist —
+no conflicts, and source names are never shown on the card. The collector wraps
+[ccusage](https://github.com/ryoppippi/ccusage), which reads local logs from Claude Code,
+Codex CLI, Gemini CLI, Copilot CLI, and more (`AIUC_CMD` / `AIUC_PROVIDER` to customize).
+
 ## Supported AI agents
 
 Claude, GitHub Copilot, OpenAI Codex, Gemini, Cursor, Devin, Aider — anything that signs
