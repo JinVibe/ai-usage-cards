@@ -71,27 +71,96 @@ and friends — with streaks, monthly totals, and a tool-share bar.
   </picture>
 </p>
 
-Usage data lives only on your machines, so a tiny collector uploads **numeric summaries
-only** (dates, token counts, sessions, top model — never project names, file paths,
-prompts, or costs) to a gist you own:
+Your usage data lives only on your machine — no server can see it. So a tiny collector
+script uploads **numeric summaries only** (dates, token counts, top model — never project
+names, file paths, prompts, or costs) to a *gist* you own, and the card reads from there.
 
-1. Create a [gist](https://gist.github.com) (secret is fine, any placeholder content) and note its id.
-2. Create a [PAT](https://github.com/settings/tokens/new?scopes=gist&description=ai-usage-cards) with only the `gist` scope.
-3. On each machine, run the collector (needs Node 20+ and your AI CLI logs):
+> **New to gists and tokens?** A **gist** is a tiny one-file storage space that comes free
+> with your GitHub account — think of it as a public mailbox the card can read your numbers
+> from. A **token (PAT)** is a limited-purpose password that lets the collector write to
+> that mailbox — and nothing else. Follow the five steps below; it takes about five minutes.
+> [한국어 가이드는 여기](docs/SETUP.ko.md).
 
+**Step 1 — Create your gist.** Go to [gist.github.com](https://gist.github.com), type
+`usage.json` as the filename and `{}` as the content, then click **Create secret gist**.
+Look at your browser's address bar: `gist.github.com/you/`**`abc123...`** — that long code
+is your **gist id**. Copy it.
+
+**Step 2 — Create your token.** Open
+[this pre-filled page](https://github.com/settings/tokens/new?scopes=gist&description=ai-usage-cards)
+(only the `gist` permission is checked — leave it that way), click **Generate token**, and
+copy the `ghp_...` string. It is shown only once.
+
+**Step 3 — Run the collector once.** Needs [Node.js](https://nodejs.org) 20+. Download the
+script and run it with your two values:
+
+macOS / Linux:
 ```bash
 curl -fsSLO https://raw.githubusercontent.com/JinVibe/ai-usage-cards/main/collector/collect.mjs
-AIUC_GIST_ID=<gist-id> AIUC_GIST_TOKEN=<pat> AIUC_SOURCE_ID=my-laptop node collect.mjs
+AIUC_GIST_ID=<gist-id> AIUC_GIST_TOKEN=<token> AIUC_SOURCE_ID=my-laptop node collect.mjs
 ```
 
-4. Re-run it on a schedule (cron, Task Scheduler, or a Claude Code hook) and embed:
+Windows (PowerShell):
+```powershell
+curl.exe -fsSLO https://raw.githubusercontent.com/JinVibe/ai-usage-cards/main/collector/collect.mjs
+$env:AIUC_GIST_ID="<gist-id>"; $env:AIUC_GIST_TOKEN="<token>"; $env:AIUC_SOURCE_ID="my-pc"; node collect.mjs
+```
+
+You should see `Uploaded N days as my-pc.json`.
+
+**Step 4 — Embed your card.** Replace the two placeholders and paste into any README:
 
 ```
 https://ai-usage-cards-swart.vercel.app/api/usage-card?username=YOUR_USERNAME&gist=YOUR_GIST_ID&theme=dark
 ```
 
-Each machine gets its own `AIUC_SOURCE_ID` and updates only its own file in the gist —
-no conflicts, and source names are never shown on the card. The collector wraps
+Your gist id is safe to share — it only exposes the same numbers the card already shows.
+Keep the token private.
+
+**Step 5 — Automate it** so the card stays fresh:
+
+<details>
+<summary>macOS / Linux (cron)</summary>
+
+```bash
+crontab -e   # add this line (runs daily at 12:00):
+0 12 * * * AIUC_GIST_ID=<gist-id> AIUC_GIST_TOKEN=<token> AIUC_SOURCE_ID=my-laptop node /path/to/collect.mjs
+```
+</details>
+
+<details>
+<summary>Windows (Task Scheduler)</summary>
+
+Save this as `collect.cmd` somewhere private (e.g. `%USERPROFILE%\.ai-usage-cards\`):
+
+```bat
+@echo off
+set AIUC_GIST_ID=<gist-id>
+set AIUC_GIST_TOKEN=<token>
+set AIUC_SOURCE_ID=my-pc
+node "C:\path\to\collect.mjs"
+```
+
+Then register it (runs daily at 12:00):
+
+```powershell
+schtasks /create /tn "ai-usage-cards-collector" /tr "%USERPROFILE%\.ai-usage-cards\collect.cmd" /sc daily /st 12:00
+```
+</details>
+
+<details>
+<summary>Troubleshooting</summary>
+
+- **`ccusage returned no daily data`** — the machine has no AI CLI logs yet (the collector
+  reads Claude Code / Codex / Gemini CLI history). Use the AI tool once, then re-run.
+- **`Gist update failed: 404`** — wrong gist id, or the token belongs to a different account.
+- **`Gist update failed: 401/403`** — token expired or missing the `gist` scope; make a new one (Step 2).
+- **Card says "No usage data collected yet"** — the collector hasn't succeeded yet; check Step 3's output.
+</details>
+
+Using more than one computer? Run Steps 3 and 5 on each, giving every machine a different
+`AIUC_SOURCE_ID` — each updates only its own file in the gist, so nothing conflicts, and
+machine names are never shown on the card. The collector wraps
 [ccusage](https://github.com/ryoppippi/ccusage), which reads local logs from Claude Code,
 Codex CLI, Gemini CLI, Copilot CLI, and more (`AIUC_CMD` / `AIUC_PROVIDER` to customize).
 
