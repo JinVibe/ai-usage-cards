@@ -27,12 +27,36 @@ export function renderEmptyCard(username: string, theme: Theme): string {
   );
 }
 
-export type CardErrorKind = 'invalid-username' | 'user-not-found' | 'rate-limited' | 'upstream';
+/** Valid gist, but no usage entries yet — the collector has not run. */
+export function renderUsageEmptyCard(username: string, theme: Theme): string {
+  return messageCard(
+    theme,
+    `${username} · AI at work`,
+    'No usage data collected yet.',
+    'Run the collector once per machine — see the repo README for setup.',
+  );
+}
+
+export type CardErrorKind =
+  | 'invalid-username'
+  | 'invalid-usage-params'
+  | 'user-not-found'
+  | 'gist-not-found'
+  | 'rate-limited'
+  | 'upstream';
 
 const ERROR_COPY: Record<CardErrorKind, { headline: string; hint: string }> = {
   'invalid-username': {
     headline: 'Missing or invalid username parameter.',
     hint: 'Use /api/card?username=<your-github-login>',
+  },
+  'invalid-usage-params': {
+    headline: 'Missing or invalid username or gist parameter.',
+    hint: 'Use /api/usage-card?username=<login>&gist=<gist-id>',
+  },
+  'gist-not-found': {
+    headline: 'Usage gist not found.',
+    hint: 'Check the gist id in the card URL — the gist must exist (secret is fine).',
   },
   'user-not-found': {
     headline: 'GitHub user not found.',
