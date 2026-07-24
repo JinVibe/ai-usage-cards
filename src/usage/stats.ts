@@ -23,6 +23,41 @@ function addDays(d: Date, delta: number): Date {
   return copy;
 }
 
+/** All-time token total across every recorded day. */
+export function totalTokens(data: UsageData): number {
+  let total = 0;
+  for (const day of data.days.values()) total += day.tokens;
+  return total;
+}
+
+const MONTH_LABELS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+/**
+ * Token totals for the last `count` calendar months (oldest first), ending
+ * with the month containing `now`.
+ */
+export function monthlyTotals(
+  data: UsageData,
+  now: Date,
+  count: number,
+): { label: string; tokens: number }[] {
+  const months: { prefix: string; label: string; tokens: number }[] = [];
+  for (let i = count - 1; i >= 0; i--) {
+    const d = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() - i, 1));
+    months.push({
+      prefix: isoDate(d).slice(0, 7),
+      label: MONTH_LABELS[d.getUTCMonth()] as string,
+      tokens: 0,
+    });
+  }
+  const byPrefix = new Map(months.map((m) => [m.prefix, m]));
+  for (const [date, day] of data.days) {
+    const month = byPrefix.get(date.slice(0, 7));
+    if (month) month.tokens += day.tokens;
+  }
+  return months.map(({ label, tokens }) => ({ label, tokens }));
+}
+
 /** Sessions and tokens summed over the calendar month containing `now`. */
 export function monthTotals(data: UsageData, now: Date): { tokens: number; sessions: number } {
   const prefix = isoDate(now).slice(0, 7);

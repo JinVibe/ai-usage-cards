@@ -1,6 +1,13 @@
 import { describe, expect, it } from 'vitest';
 import { mergeSources, parseSourceFile } from '../src/usage/merge.js';
-import { currentStreak, formatTokens, heatmapGrid, monthTotals } from '../src/usage/stats.js';
+import {
+  currentStreak,
+  formatTokens,
+  heatmapGrid,
+  monthTotals,
+  monthlyTotals,
+  totalTokens,
+} from '../src/usage/stats.js';
 import type { UsageData, UsageSourceFile } from '../src/usage/types.js';
 
 const validFile = {
@@ -72,6 +79,17 @@ describe('mergeSources', () => {
     expect(merged.providers).toEqual([]);
     expect(merged.topModel).toBeNull();
   });
+
+  it('narrows to the requested providers only', () => {
+    const merged = mergeSources([fileA, fileB], ['codex']);
+    expect(merged.providers.map((p) => p.provider)).toEqual(['codex']);
+    expect(merged.days.get('2026-07-23')).toEqual({ tokens: 60000, sessions: 2 });
+    expect(merged.topModel).toBe('gpt-5');
+  });
+
+  it('treats an empty provider filter as "all"', () => {
+    expect(mergeSources([fileA, fileB], []).providers).toHaveLength(2);
+  });
 });
 
 describe('formatTokens', () => {
@@ -96,6 +114,32 @@ describe('monthTotals', () => {
   it('sums only the current calendar month', () => {
     const data = usageWith({ '2026-07-01': 100, '2026-07-24': 50, '2026-06-30': 999 });
     expect(monthTotals(data, new Date('2026-07-24T12:00:00Z'))).toEqual({ tokens: 150, sessions: 2 });
+  });
+});
+
+describe('totalTokens', () => {
+  it('sums every recorded day', () => {
+    expect(totalTokens(usageWith({ '2026-01-01': 100, '2026-07-24': 50 }))).toBe(150);
+    expect(totalTokens(usageWith({}))).toBe(0);
+  });
+});
+
+describe('monthlyTotals', () => {
+  it('returns the last N calendar months oldest-first, including empty ones', () => {
+    const data = usageWith({ '2026-07-10': 700, '2026-07-20': 30, '2026-05-01': 500, '2025-12-31': 999 });
+    const months = monthlyTotals(data, new Date('2026-07-24T12:00:00Z'), 6);
+    expect(months.map((m) => m.label)).toEqual(['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul']);
+    expect(months[3]).toEqual({ label: 'May', tokens: 500 });
+    expect(months[5]).toEqual({ label: 'Jul', tokens: 730 });
+    expect(months[0]).toEqual({ label: 'Feb', tokens: 0 });
+  });
+
+  it('spans year boundaries', () => {
+    const months = monthlyTotals(usageWith({ '2025-12-15': 42 }), new Date('2026-01-10T12:00:00Z'), 2);
+    expect(months).toEqual([
+      { label: 'Dec', tokens: 42 },
+      { label: 'Jan', tokens: 0 },
+    ]);
   });
 });
 

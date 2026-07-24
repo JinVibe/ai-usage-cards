@@ -50,15 +50,18 @@ function entryTokens(entry: UsageDailyEntry): number {
 /**
  * Merges all source files: identical date+provider entries from different
  * sources are summed (two machines, one account), then collapsed into
- * per-day and per-provider aggregates.
+ * per-day and per-provider aggregates. Pass `providers` to include only the
+ * AI tools the user wants on their card — everything else is ignored.
  */
-export function mergeSources(files: UsageSourceFile[]): UsageData {
+export function mergeSources(files: UsageSourceFile[], providers?: string[]): UsageData {
+  const wanted = providers && providers.length > 0 ? new Set(providers) : null;
   const days = new Map<string, { tokens: number; sessions: number }>();
   const providerTokens = new Map<string, number>();
   const modelTokens = new Map<string, number>();
 
   for (const file of files) {
     for (const entry of file.daily) {
+      if (wanted && !wanted.has(entry.provider)) continue;
       const tokens = entryTokens(entry);
       const day = days.get(entry.date) ?? { tokens: 0, sessions: 0 };
       day.tokens += tokens;
@@ -72,7 +75,7 @@ export function mergeSources(files: UsageSourceFile[]): UsageData {
     }
   }
 
-  const providers = [...providerTokens.entries()]
+  const providerTotals = [...providerTokens.entries()]
     .map(([provider, tokens]) => ({ provider, tokens }))
     .filter((p) => p.tokens > 0)
     .sort((a, b) => b.tokens - a.tokens || a.provider.localeCompare(b.provider));
@@ -86,5 +89,5 @@ export function mergeSources(files: UsageSourceFile[]): UsageData {
     }
   }
 
-  return { days, providers, topModel };
+  return { days, providers: providerTotals, topModel };
 }
