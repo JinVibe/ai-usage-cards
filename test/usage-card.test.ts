@@ -8,12 +8,13 @@ const light = resolveTheme('light');
 
 const data: UsageData = {
   days: new Map([
+    ['2026-05-10', { tokens: 400_000, sessions: 2 }],
     ['2026-07-22', { tokens: 200_000, sessions: 3 }],
     ['2026-07-23', { tokens: 800_000, sessions: 5 }],
     ['2026-07-24', { tokens: 150_000, sessions: 2 }],
   ]),
   providers: [
-    { provider: 'claude-code', tokens: 900_000 },
+    { provider: 'claude-code', tokens: 1_300_000 },
     { provider: 'codex', tokens: 250_000 },
   ],
   topModel: 'opus',
@@ -22,32 +23,34 @@ const data: UsageData = {
 describe('renderUsageCard', () => {
   const svg = renderUsageCard('octo', data, light, now);
 
-  it('renders the monthly summary with sessions, tokens, and streak', () => {
-    expect(svg).toContain('This month: 10 sessions · 1.2M tokens · 3-day streak');
+  it('leads with the all-time total and the current month', () => {
+    expect(svg).toContain('Total: 1.6M tokens · This month: 1.2M · 3-day streak');
   });
 
   it('renders a 26-week heatmap grid', () => {
     expect(svg.match(/rx="2" fill="#0969da"/g)?.length).toBeGreaterThanOrEqual(26 * 7);
   });
 
-  it('shows the tool share bar with friendly labels', () => {
-    expect(svg).toContain('Claude Code 78%');
-    expect(svg).toContain('Codex 22%');
+  it('breaks usage down by month with labels and values', () => {
+    for (const label of ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul']) {
+      expect(svg).toContain(`>${label}</text>`);
+    }
+    expect(svg).toContain('>400k</text>'); // May
+    expect(svg).toContain('>1.2M</text>'); // July
   });
 
   it('shows the top model', () => {
     expect(svg).toContain('top model: opus');
   });
 
-  it('omits sessions and streak lines when unavailable', () => {
+  it('omits the streak when there is no recent activity', () => {
     const sparse: UsageData = {
       days: new Map([['2026-07-01', { tokens: 5000, sessions: 0 }]]),
       providers: [{ provider: 'claude-code', tokens: 5000 }],
       topModel: null,
     };
     const out = renderUsageCard('octo', sparse, light, now);
-    expect(out).toContain('This month: 5k tokens');
-    expect(out).not.toContain('sessions');
+    expect(out).toContain('Total: 5k tokens · This month: 5k');
     expect(out).not.toContain('streak');
     expect(out).not.toContain('top model:');
   });
@@ -60,14 +63,13 @@ describe('renderUsageCard', () => {
     expect(svg).not.toMatch(/[\w.+-]+@[\w-]+\.[\w.]+/);
   });
 
-  it('escapes hostile provider and model strings', () => {
+  it('escapes hostile model strings', () => {
     const evil: UsageData = {
-      days: new Map(),
-      providers: [{ provider: '<script>x</script>', tokens: 100 }],
+      days: new Map([['2026-07-24', { tokens: 100, sessions: 1 }]]),
+      providers: [],
       topModel: '"><img onerror=1>',
     };
     const out = renderUsageCard('octo', evil, light, now);
-    expect(out).not.toContain('<script>');
     expect(out).not.toContain('<img');
   });
 });
