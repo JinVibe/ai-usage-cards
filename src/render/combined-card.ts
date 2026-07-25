@@ -55,9 +55,9 @@ export function renderCombinedCard(
   const stripY = gridY + GRID_HEIGHT + 12;
 
   const body = `
-  <g class="fade" transform="translate(${CARD_PADDING}, 21)">
+  <g transform="translate(${CARD_PADDING}, 21)"><g class="fade">
     <path d="M7 0 L8.6 5.4 L14 7 L8.6 8.6 L7 14 L5.4 8.6 L0 7 L5.4 5.4 Z" fill="${theme.accent}"/>
-  </g>
+  </g></g>
   <text class="fade" x="${CARD_PADDING + 22}" y="33" font-size="14" font-weight="600" fill="${theme.title}">${escapeXml(title)}</text>
   <text class="fade" style="animation-delay:100ms" x="${CARD_WIDTH - CARD_PADDING}" y="33" text-anchor="end" font-size="10" fill="${theme.muted}">last 6 months</text>
   <text class="fade" style="animation-delay:150ms" x="${CARD_PADDING}" y="${summaryY}" font-size="12" fill="${theme.text}">${escapeXml(summaryLine(usage, now))}</text>` +

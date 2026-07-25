@@ -135,7 +135,7 @@ export function renderBuddyCard(username: string, data: UsageData, theme: Theme)
   let body = `
   <text class="fade" x="${cx}" y="32" text-anchor="middle" font-size="13" font-weight="600" fill="${theme.title}">${escapeXml(title)}</text>
   <circle class="fade" style="animation-delay:100ms" cx="${cx}" cy="124" r="62" fill="url(#glowg)"/>
-  <g class="fade" style="animation-delay:150ms" transform="translate(${cx}, 112)">${buddyArt(lvl.level, theme)}</g>
+  <g transform="translate(${cx}, 112)"><g class="fade" style="animation-delay:150ms">${buddyArt(lvl.level, theme)}</g></g>
   <text class="fade" style="animation-delay:300ms" x="${cx}" y="184" text-anchor="middle" font-size="14" font-weight="700" fill="url(#ag)">Lv.${lvl.level} · ${escapeXml(lvl.name)}</text>
   <text class="fade" style="animation-delay:350ms" x="${cx}" y="201" text-anchor="middle" font-size="10" fill="${theme.muted}">${escapeXml(formatTokens(total))} tokens</text>`;
 

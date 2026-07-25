@@ -29,14 +29,14 @@
   <rect class="beam" x="0.5" y="0.5" width="239" height="259" rx="8" fill="none" stroke="url(#ag)" stroke-width="1" pathLength="100" stroke-dasharray="26 74" stroke-linecap="round" opacity="0.75"/>
   <text class="fade" x="120" y="32" text-anchor="middle" font-size="13" font-weight="600" fill="#58a6ff">octocat · AI buddy</text>
   <circle class="fade" style="animation-delay:100ms" cx="120" cy="124" r="62" fill="url(#glowg)"/>
-  <g class="fade" style="animation-delay:150ms" transform="translate(120, 112)">
+  <g transform="translate(120, 112)"><g class="fade" style="animation-delay:150ms">
       
       <line x1="0" y1="-19" x2="0" y2="-8" stroke="#58a6ff" stroke-width="2"/>
       <g transform="translate(0, -21)"><path transform="translate(-6.3, -6.3) scale(0.9)" d="M7 0 L8.6 5.4 L14 7 L8.6 8.6 L7 14 L5.4 8.6 L0 7 L5.4 5.4 Z" fill="#58a6ff" fill-opacity="1"/></g>
       <rect x="-31" y="-8" width="62" height="52" rx="12" fill="#58a6ff" fill-opacity="0.16" stroke="#58a6ff" stroke-width="1.5"/>
       <circle cx="-11" cy="15.399999999999999" r="4" fill="#58a6ff"/><circle cx="11" cy="15.399999999999999" r="4" fill="#58a6ff"/>
       <path d="M-8 28.4 Q0 34.4 8 28.4" fill="none" stroke="#58a6ff" stroke-width="2" stroke-linecap="round"/>
-      <ellipse cx="0" cy="48" rx="30" ry="4" fill="#58a6ff" fill-opacity="0.12"/></g>
+      <ellipse cx="0" cy="48" rx="30" ry="4" fill="#58a6ff" fill-opacity="0.12"/></g></g>
   <text class="fade" style="animation-delay:300ms" x="120" y="184" text-anchor="middle" font-size="14" font-weight="700" fill="url(#ag)">Lv.3 · Circuit</text>
   <text class="fade" style="animation-delay:350ms" x="120" y="201" text-anchor="middle" font-size="10" fill="#8b949e">22M tokens</text>
   <g class="fade" style="animation-delay:400ms">

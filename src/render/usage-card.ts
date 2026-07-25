@@ -134,9 +134,9 @@ export function renderUsageCard(
   const monthsY = gridY + GRID_HEIGHT + 12;
 
   let body = `
-  <g class="fade" transform="translate(${CARD_PADDING}, 21)">
+  <g transform="translate(${CARD_PADDING}, 21)"><g class="fade">
     <path d="M7 0 L8.6 5.4 L14 7 L8.6 8.6 L7 14 L5.4 8.6 L0 7 L5.4 5.4 Z" fill="${theme.accent}"/>
-  </g>
+  </g></g>
   <text class="fade" x="${CARD_PADDING + 22}" y="33" font-size="14" font-weight="600" fill="${theme.title}">${escapeXml(title)}</text>`;
 
   if (data.topModel) {

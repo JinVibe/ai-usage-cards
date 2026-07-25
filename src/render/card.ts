@@ -33,9 +33,9 @@ export const cardModules: Record<string, CardModule> = {
 /** Four-point sparkle, drawn at the header's left edge in the accent hue. */
 function sparkle(theme: Theme): string {
   return `
-  <g class="fade" transform="translate(${CARD_PADDING}, 21)">
+  <g transform="translate(${CARD_PADDING}, 21)"><g class="fade">
     <path d="M7 0 L8.6 5.4 L14 7 L8.6 8.6 L7 14 L5.4 8.6 L0 7 L5.4 5.4 Z" fill="${theme.accent}"/>
-  </g>`;
+  </g></g>`;
 }
 
 /**

@@ -27,9 +27,9 @@
     <circle cx="10" cy="184" r="70" fill="url(#glowg)"/>
   </g>
   <rect class="beam" x="0.5" y="0.5" width="449" height="183" rx="8" fill="none" stroke="url(#ag)" stroke-width="1" pathLength="100" stroke-dasharray="26 74" stroke-linecap="round" opacity="0.75"/>
-  <g class="fade" transform="translate(24, 21)">
+  <g transform="translate(24, 21)"><g class="fade">
     <path d="M7 0 L8.6 5.4 L14 7 L8.6 8.6 L7 14 L5.4 8.6 L0 7 L5.4 5.4 Z" fill="#58a6ff"/>
-  </g>
+  </g></g>
   <text class="fade" x="46" y="33" font-size="14" font-weight="600" fill="#58a6ff">octocat · shipped with AI</text>
   <text class="fade" style="animation-delay:100ms" x="426" y="33" text-anchor="end" font-size="10" fill="#8b949e">in 4 public repos</text>
     <g class="fade" style="animation-delay:150ms">
