@@ -10,7 +10,7 @@ import type { Theme } from '../themes.js';
  */
 export const REPO_SLOT_COUNT = 3;
 export const REPO_ROW_HEIGHT = 20;
-const BLOCK_PADDING = 14;
+const BLOCK_PADDING = 16;
 const FONT_SIZE = 11;
 const BAR_WIDTH = 64;
 const BAR_HEIGHT = 4;

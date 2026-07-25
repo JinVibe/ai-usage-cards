@@ -1,12 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="240" height="244" viewBox="0 0 240 244" role="img" aria-label="octocat&apos;s AI buddy: level 5 Nova, 400M tokens" font-family="'Segoe UI', Ubuntu, Helvetica, Arial, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="260" viewBox="0 0 240 260" role="img" aria-label="octocat&apos;s AI buddy: level 5 Nova, 400M tokens" font-family="'Segoe UI', Ubuntu, Helvetica, Arial, sans-serif">
   <style>
     .fade { opacity: 0; animation: fadeUp 0.5s ease-out forwards; }
     @keyframes fadeUp { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
     @media (prefers-reduced-motion: reduce) { .fade { opacity: 1; animation: none; } }
   </style>
-  <rect x="0.5" y="0.5" width="239" height="243" rx="8" fill="#ffffff" stroke="#e4e2e2"/>
+  <rect x="0.5" y="0.5" width="239" height="259" rx="8" fill="#ffffff" stroke="#e4e2e2"/>
   <text class="fade" x="120" y="32" text-anchor="middle" font-size="13" font-weight="600" fill="#0969da">octocat · AI buddy</text>
-  <g class="fade" style="animation-delay:150ms" transform="translate(120, 106)">
+  <g class="fade" style="animation-delay:150ms" transform="translate(120, 112)">
       <g transform="translate(-42, -30)"><path transform="translate(-7.700000000000001, -7.700000000000001) scale(1.1)" d="M7 0 L8.6 5.4 L14 7 L8.6 8.6 L7 14 L5.4 8.6 L0 7 L5.4 5.4 Z" fill="#0969da" fill-opacity="0.55"/></g>
       <g transform="translate(44, -14)"><path transform="translate(-6.3, -6.3) scale(0.9)" d="M7 0 L8.6 5.4 L14 7 L8.6 8.6 L7 14 L5.4 8.6 L0 7 L5.4 5.4 Z" fill="#0969da" fill-opacity="0.55"/></g>
       
@@ -21,14 +21,14 @@
       <line x1="-20" y1="24" x2="-32" y2="16" stroke="#0969da" stroke-width="2.5" stroke-linecap="round"/>
       <line x1="20" y1="24" x2="32" y2="16" stroke="#0969da" stroke-width="2.5" stroke-linecap="round"/>
       <ellipse cx="0" cy="52" rx="28" ry="4" fill="#0969da" fill-opacity="0.12"/></g>
-  <text class="fade" style="animation-delay:300ms" x="120" y="176" text-anchor="middle" font-size="14" font-weight="700" fill="#0969da">Lv.5 · Nova</text>
-  <text class="fade" style="animation-delay:350ms" x="120" y="193" text-anchor="middle" font-size="10" fill="#6e7781">400M tokens</text>
+  <text class="fade" style="animation-delay:300ms" x="120" y="184" text-anchor="middle" font-size="14" font-weight="700" fill="#0969da">Lv.5 · Nova</text>
+  <text class="fade" style="animation-delay:350ms" x="120" y="201" text-anchor="middle" font-size="10" fill="#6e7781">400M tokens</text>
   <g class="fade" style="animation-delay:400ms">
-    <rect x="44" y="201" width="152" height="5" rx="2.5" fill="#0969da" fill-opacity="0.12"/>
-    <rect x="44" y="201" width="152" height="5" rx="2.5" fill="#0969da" fill-opacity="0.6"/>
-    <text x="120" y="218" text-anchor="middle" font-size="8" fill="#6e7781">max level</text>
+    <rect x="44" y="209" width="152" height="5" rx="2.5" fill="#0969da" fill-opacity="0.12"/>
+    <rect x="44" y="209" width="152" height="5" rx="2.5" fill="#0969da" fill-opacity="0.6"/>
+    <text x="120" y="226" text-anchor="middle" font-size="8" fill="#6e7781">max level</text>
   </g>
   <a href="https://github.com/JinVibe/ai-usage-cards" target="_blank">
-    <text x="216" y="230" text-anchor="end" font-size="9" fill="#6e7781" fill-opacity="0.8">made with ai-usage-cards</text>
+    <text x="216" y="246" text-anchor="end" font-size="9" fill="#6e7781" fill-opacity="0.8">made with ai-usage-cards</text>
   </a>
 </svg>

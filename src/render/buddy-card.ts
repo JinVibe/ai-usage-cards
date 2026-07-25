@@ -5,9 +5,9 @@ import { CARD_PADDING } from './layout.js';
 import { escapeXml, truncateToWidth } from './svg.js';
 import type { Theme } from './themes.js';
 
-/** Sized to sit beside the 450px cards in the same 244px row. */
+/** Sized to sit beside the 450px cards in the same card row. */
 export const BUDDY_CARD_WIDTH = 240;
-export const BUDDY_CARD_HEIGHT = 244;
+export const BUDDY_CARD_HEIGHT = 260;
 
 /**
  * The buddy is an ORIGINAL sparkle creature — deliberately not any vendor's
@@ -115,9 +115,9 @@ export function renderBuddyCard(username: string, data: UsageData, theme: Theme)
   const title = truncateToWidth(`${username} · AI buddy`, BUDDY_CARD_WIDTH - CARD_PADDING * 2, 13);
   let body = `
   <text class="fade" x="${cx}" y="32" text-anchor="middle" font-size="13" font-weight="600" fill="${theme.title}">${escapeXml(title)}</text>
-  <g class="fade" style="animation-delay:150ms" transform="translate(${cx}, 106)">${buddyArt(lvl.level, theme)}</g>
-  <text class="fade" style="animation-delay:300ms" x="${cx}" y="176" text-anchor="middle" font-size="14" font-weight="700" fill="${theme.accent}">Lv.${lvl.level} · ${escapeXml(lvl.name)}</text>
-  <text class="fade" style="animation-delay:350ms" x="${cx}" y="193" text-anchor="middle" font-size="10" fill="${theme.muted}">${escapeXml(formatTokens(total))} tokens</text>`;
+  <g class="fade" style="animation-delay:150ms" transform="translate(${cx}, 112)">${buddyArt(lvl.level, theme)}</g>
+  <text class="fade" style="animation-delay:300ms" x="${cx}" y="184" text-anchor="middle" font-size="14" font-weight="700" fill="${theme.accent}">Lv.${lvl.level} · ${escapeXml(lvl.name)}</text>
+  <text class="fade" style="animation-delay:350ms" x="${cx}" y="201" text-anchor="middle" font-size="10" fill="${theme.muted}">${escapeXml(formatTokens(total))} tokens</text>`;
 
   const barX = 44;
   const barWidth = BUDDY_CARD_WIDTH - barX * 2;
@@ -125,9 +125,9 @@ export function renderBuddyCard(username: string, data: UsageData, theme: Theme)
   const hint = lvl.next === null ? 'max level' : `${formatTokens(lvl.next - total)} to Lv.${lvl.level + 1}`;
   body += `
   <g class="fade" style="animation-delay:400ms">
-    <rect x="${barX}" y="201" width="${barWidth}" height="5" rx="2.5" fill="${theme.accent}" fill-opacity="0.12"/>
-    <rect x="${barX}" y="201" width="${Math.max(3, Math.round(barWidth * progress))}" height="5" rx="2.5" fill="${theme.accent}" fill-opacity="0.6"/>
-    <text x="${cx}" y="218" text-anchor="middle" font-size="8" fill="${theme.muted}">${escapeXml(hint)}</text>
+    <rect x="${barX}" y="209" width="${barWidth}" height="5" rx="2.5" fill="${theme.accent}" fill-opacity="0.12"/>
+    <rect x="${barX}" y="209" width="${Math.max(3, Math.round(barWidth * progress))}" height="5" rx="2.5" fill="${theme.accent}" fill-opacity="0.6"/>
+    <text x="${cx}" y="226" text-anchor="middle" font-size="8" fill="${theme.muted}">${escapeXml(hint)}</text>
   </g>`;
 
   return cardShell(
