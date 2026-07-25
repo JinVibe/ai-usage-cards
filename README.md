@@ -34,16 +34,16 @@ Or paste this directly, replacing `YOUR_USERNAME`:
 |---|---|---|---|
 | `username` | GitHub login | *(required)* | |
 | `modules` | `funnel`, `repos` (comma-separated) | `funnel` | All modules are opt-in — you choose what to show |
-| `theme` | `light`, `dark`, `dim` | `light` | Unknown values fall back to `light` |
+| `theme` | `light`, `dark`, `dim`, `neon` | `light` | Unknown values fall back to `light` |
 
 - **`funnel`** — the headline: `≥N AI-assisted commits → ≥M merged PRs → K releases`.
 - **`repos`** — per-repo case cards (`spark-app — shipped v1.2.0 · ≥20 AI-assisted commits`), a unit you can paste next to a resume line.
 
 ## Themes
 
-| `light` | `dark` | `dim` |
-|---|---|---|
-| ![light](docs/theme-light.svg) | ![dark](docs/theme-dark.svg) | ![dim](docs/theme-dim.svg) |
+| `light` | `dark` | `dim` | `neon` |
+|---|---|---|---|
+| ![light](docs/theme-light.svg) | ![dark](docs/theme-dark.svg) | ![dim](docs/theme-dim.svg) | ![neon](docs/theme-neon.svg) |
 
 New themes are welcome — add a token record in [`src/render/themes.ts`](src/render/themes.ts) (single-hue, please).
 
@@ -124,7 +124,7 @@ Usage and combined card options:
 | `username` | GitHub login | *(required)* | |
 | `gist` | your gist id | *(required)* | |
 | `providers` | e.g. `claude-code,codex` | all | Show only the AI tools you actually use — totals, heatmap, and monthly bars all follow the filter |
-| `theme` | `light`, `dark`, `dim` | `light` | |
+| `theme` | `light`, `dark`, `dim`, `neon` | `light` | |
 
 The card leads with your **all-time total**, the **current month**, and a **month-by-month
 breakdown** of the last six months.
@@ -199,7 +199,7 @@ evolution stages from a lone **Spark** to a crowned **Nova**. Sized to sit right
 the other cards.
 
 | Lv.1 Spark | Lv.2 Ember | Lv.3 Circuit | Lv.4 Dynamo | Lv.5 Nova |
-|---|---|---|---|---|
+|---|---|---|---|---|---|
 | ![lv1](docs/buddy-lv1.svg) | ![lv2](docs/buddy-lv2.svg) | ![lv3](docs/buddy-lv3.svg) | ![lv4](docs/buddy-lv4.svg) | ![lv5](docs/buddy-lv5.svg) |
 
 ```

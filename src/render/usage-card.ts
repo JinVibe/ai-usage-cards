@@ -59,9 +59,18 @@ export function renderHeatmap(data: UsageData, theme: Theme, x: number, y: numbe
   const cells: string[] = [];
   grid.forEach((column, w) => {
     column.forEach((cell, d) => {
+      const cellX = x + w * (CELL + CELL_GAP);
+      const cellY = y + d * (CELL + CELL_GAP);
+      // Peak days shift to the gradient's far hue and glow.
+      if (cell.level === 4) {
+        cells.push(
+          `<rect class="hm" x="${cellX}" y="${cellY}" width="${CELL}" height="${CELL}" rx="2" fill="${theme.accent2}" filter="url(#cellglow)"/>`,
+        );
+        return;
+      }
       const opacity = cell.level === 0 ? IDLE_OPACITY : LEVEL_OPACITY[cell.level];
       cells.push(
-        `<rect x="${x + w * (CELL + CELL_GAP)}" y="${y + d * (CELL + CELL_GAP)}" width="${CELL}" height="${CELL}" rx="2" fill="${theme.accent}" fill-opacity="${opacity}"/>`,
+        `<rect class="hm" x="${cellX}" y="${cellY}" width="${CELL}" height="${CELL}" rx="2" fill="${theme.accent}" fill-opacity="${opacity}"/>`,
       );
     });
   });
@@ -70,25 +79,36 @@ export function renderHeatmap(data: UsageData, theme: Theme, x: number, y: numbe
 }
 
 /**
- * Month-by-month mini bars for the last six calendar months: value on top,
- * bar in the middle, month label below. The current month is emphasized.
+ * Month-by-month bars for the last six calendar months, extruded into small
+ * isometric 3D blocks (front, side, and top faces): value on top, month label
+ * below. The current month is emphasized.
  */
 function renderMonthlyBars(data: UsageData, theme: Theme, y: number, now: Date): string {
   const months = monthlyTotals(data, now, MONTHS_SHOWN);
   const max = Math.max(1, ...months.map((m) => m.tokens));
   const colWidth = (CARD_WIDTH - CARD_PADDING * 2) / MONTHS_SHOWN;
-  const barMaxHeight = 16;
-  const barWidth = 30;
+  const barMaxHeight = 15;
+  const barWidth = 28;
+  const depth = 5;
   const barBottom = y + 26;
 
   const bars = months.map((month, i) => {
     const cx = CARD_PADDING + colWidth * i + colWidth / 2;
-    const h = month.tokens === 0 ? 0 : Math.max(2, Math.round((month.tokens / max) * barMaxHeight));
     const isCurrent = i === months.length - 1;
-    return `
-    <text x="${cx}" y="${y + 6}" text-anchor="middle" font-size="8" fill="${theme.muted}">${month.tokens > 0 ? formatTokens(month.tokens) : ''}</text>
-    <rect x="${(cx - barWidth / 2).toFixed(1)}" y="${barBottom - h}" width="${barWidth}" height="${h}" rx="2" fill="${theme.accent}" fill-opacity="${isCurrent ? 0.85 : 0.4}"/>
+    const value = month.tokens > 0 ? formatTokens(month.tokens) : '';
+    const labels = `
+    <text x="${cx}" y="${y + 6}" text-anchor="middle" font-size="8" fill="${theme.muted}">${value}</text>
     <text x="${cx}" y="${barBottom + 11}" text-anchor="middle" font-size="8" fill="${theme.muted}">${escapeXml(month.label)}</text>`;
+    if (month.tokens === 0) return labels;
+
+    const h = Math.max(3, Math.round((month.tokens / max) * barMaxHeight));
+    const x = cx - barWidth / 2;
+    const top = barBottom - h;
+    const frontOpacity = isCurrent ? 0.95 : 0.5;
+    return `${labels}
+    <polygon points="${x},${top} ${x + depth},${top - depth * 0.6} ${x + barWidth + depth},${top - depth * 0.6} ${x + barWidth},${top}" fill="${theme.accent2}" fill-opacity="${isCurrent ? 1 : 0.6}"/>
+    <polygon points="${x + barWidth},${top} ${x + barWidth + depth},${top - depth * 0.6} ${x + barWidth + depth},${barBottom - depth * 0.6} ${x + barWidth},${barBottom}" fill="${theme.accent}" fill-opacity="${frontOpacity * 0.55}"/>
+    <rect x="${x}" y="${top}" width="${barWidth}" height="${h}" fill="url(#ag)" opacity="${frontOpacity}"/>`;
   });
 
   return `

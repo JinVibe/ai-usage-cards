@@ -57,8 +57,8 @@ export function renderFunnel(data: CardData, theme: Theme, y: number): string {
     const value = truncateToWidth(stage.value, stageWidth - 12, 24);
     return `
     <g class="fade" style="animation-delay:${150 + i * 120}ms">
-      <rect x="${x}" y="${chipY}" width="${stageWidth}" height="${STAGE_HEIGHT}" rx="9" fill="${theme.accent}" fill-opacity="${STAGE_FILL_OPACITY[i]}" stroke="${theme.accent}" stroke-opacity="${STAGE_STROKE_OPACITY[i]}"/>
-      <text x="${cx}" y="${chipY + 31}" text-anchor="middle" font-size="24" font-weight="800" fill="${theme.accent}">${escapeXml(value)}</text>
+      <rect x="${x}" y="${chipY}" width="${stageWidth}" height="${STAGE_HEIGHT}" rx="9" fill="${theme.accent}" fill-opacity="${STAGE_FILL_OPACITY[i]}" stroke="${theme.accent}" stroke-opacity="${STAGE_STROKE_OPACITY[i]}" filter="url(#soft)"/>
+      <text x="${cx}" y="${chipY + 31}" text-anchor="middle" font-size="24" font-weight="800" fill="url(#ag)">${escapeXml(value)}</text>
       <text x="${cx}" y="${chipY + 48}" text-anchor="middle" font-size="10" fill="${theme.muted}">${escapeXml(stage.label)}</text>
     </g>`;
   });

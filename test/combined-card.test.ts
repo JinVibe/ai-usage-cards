@@ -32,7 +32,7 @@ describe('renderCombinedCard', () => {
 
   it('stacks the usage summary, heatmap, and outcome strip', () => {
     expect(svg).toContain('This month:');
-    expect(svg.match(/rx="2" fill="#0969da"/g)?.length).toBeGreaterThanOrEqual(26 * 7);
+    expect(svg.match(/class="hm"/g)?.length).toBe(26 * 7);
     expect(svg).toContain('≥42');
     expect(svg).toContain('AI commits');
     expect(svg).toContain('≥17');

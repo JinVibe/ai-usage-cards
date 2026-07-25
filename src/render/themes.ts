@@ -1,18 +1,21 @@
 /**
- * Theme token records. Single-hue by design: one accent color per theme, the
- * rest is neutral — no per-tool rainbow. Community themes are added here.
+ * Theme token records. One accent *gradient* per theme (accent → accent2),
+ * neutral everything else — still no per-tool rainbow. Community themes are
+ * added here.
  */
 export interface Theme {
   bg: string;
   border: string;
-  /** Card title. */
+  /** Card title. Kept equal to `accent` (guarded by tests). */
   title: string;
-  /** Primary numbers. */
+  /** Primary numbers and text. */
   text: string;
   /** Labels, arrows, footer. */
   muted: string;
-  /** Repo names, emphasis. */
+  /** Gradient start: repo names, emphasis, heatmap. */
   accent: string;
+  /** Gradient end: glow, peaks, the border beam's tail. */
+  accent2: string;
 }
 
 export const themes: Record<string, Theme> = {
@@ -23,6 +26,7 @@ export const themes: Record<string, Theme> = {
     text: '#24292f',
     muted: '#6e7781',
     accent: '#0969da',
+    accent2: '#8250df',
   },
   dark: {
     bg: '#0d1117',
@@ -31,6 +35,7 @@ export const themes: Record<string, Theme> = {
     text: '#c9d1d9',
     muted: '#8b949e',
     accent: '#58a6ff',
+    accent2: '#bc8cff',
   },
   dim: {
     bg: '#22272e',
@@ -39,6 +44,16 @@ export const themes: Record<string, Theme> = {
     text: '#adbac7',
     muted: '#768390',
     accent: '#539bf5',
+    accent2: '#b083f0',
+  },
+  neon: {
+    bg: '#0a0b16',
+    border: '#272945',
+    title: '#22d3ee',
+    text: '#e6e6f0',
+    muted: '#8b8ca7',
+    accent: '#22d3ee',
+    accent2: '#a78bfa',
   },
 };
 

@@ -52,12 +52,34 @@ export function cardShell(
 ): string {
   const footerY = height - 14;
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" role="img" aria-label="${escapeXml(ariaLabel)}" font-family="${FONT_FAMILY}">
+  <defs>
+    <linearGradient id="ag" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="${theme.accent}"/><stop offset="1" stop-color="${theme.accent2}"/>
+    </linearGradient>
+    <radialGradient id="glowg">
+      <stop offset="0" stop-color="${theme.accent2}" stop-opacity="0.14"/><stop offset="1" stop-color="${theme.accent2}" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="1.5" stdDeviation="2.5" flood-color="${theme.accent}" flood-opacity="0.22"/>
+    </filter>
+    <filter id="cellglow" x="-150%" y="-150%" width="400%" height="400%">
+      <feDropShadow dx="0" dy="0" stdDeviation="1.6" flood-color="${theme.accent2}" flood-opacity="0.9"/>
+    </filter>
+    <clipPath id="clip"><rect x="0.5" y="0.5" width="${width - 1}" height="${height - 1}" rx="8"/></clipPath>
+  </defs>
   <style>
     .fade { opacity: 0; animation: fadeUp 0.5s ease-out forwards; }
     @keyframes fadeUp { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
-    @media (prefers-reduced-motion: reduce) { .fade { opacity: 1; animation: none; } }
+    .beam { animation: beam 7s linear infinite; }
+    @keyframes beam { to { stroke-dashoffset: -100; } }
+    @media (prefers-reduced-motion: reduce) { .fade { opacity: 1; animation: none; } .beam { animation: none; opacity: 0.3; } }
   </style>
-  <rect x="0.5" y="0.5" width="${width - 1}" height="${height - 1}" rx="8" fill="${theme.bg}" stroke="${theme.border}"/>${body}
+  <rect x="0.5" y="0.5" width="${width - 1}" height="${height - 1}" rx="8" fill="${theme.bg}" stroke="${theme.border}"/>
+  <g clip-path="url(#clip)">
+    <circle cx="${width - 36}" cy="4" r="96" fill="url(#glowg)"/>
+    <circle cx="10" cy="${height}" r="70" fill="url(#glowg)"/>
+  </g>
+  <rect class="beam" x="0.5" y="0.5" width="${width - 1}" height="${height - 1}" rx="8" fill="none" stroke="url(#ag)" stroke-width="1" pathLength="100" stroke-dasharray="26 74" stroke-linecap="round" opacity="0.75"/>${body}
   <a href="${PROJECT_URL}" target="_blank">
     <text x="${width - CARD_PADDING}" y="${footerY}" text-anchor="end" font-size="9" fill="${theme.muted}" fill-opacity="0.8">made with ai-usage-cards</text>
   </a>

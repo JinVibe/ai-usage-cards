@@ -10,17 +10,18 @@ Themes live in [`src/render/themes.ts`](src/render/themes.ts) — one token reco
 mytheme: {
   bg: '#0f0f14',
   border: '#2a2a35',
-  title: '#8b7ef8',   // the single accent hue
+  title: '#8b7ef8',    // the accent hue
   text: '#e4e2f0',
   muted: '#7a7a8c',
-  accent: '#8b7ef8',  // keep identical to title — single-hue by design
+  accent: '#8b7ef8',   // keep identical to title — guarded by tests
+  accent2: '#22d3ee',  // gradient end: glow, peaks, the border beam's tail
 },
 ```
 
 Rules:
-- **Single-hue**: one accent color, neutral everything else. No rainbows.
+- **One accent gradient** (`accent → accent2`), neutral everything else. No rainbows.
 - Keep enough contrast for the muted labels in both GitHub light and dark READMEs.
-- Run `npm test` — a guard test enforces `accent === title`.
+- Run `npm test` — guard tests enforce `accent === title` and a valid `accent2`.
 
 ## Add an AI agent signature
 

@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="450" height="184" viewBox="0 0 450 184" role="img" aria-label="octocat: at least 42 AI-assisted commits, at least 17 merged PRs, 3 releases" font-family="'Segoe UI', Ubuntu, Helvetica, Arial, sans-serif">
+  <defs>
+    <linearGradient id="ag" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#22d3ee"/><stop offset="1" stop-color="#a78bfa"/>
+    </linearGradient>
+    <radialGradient id="glowg">
+      <stop offset="0" stop-color="#a78bfa" stop-opacity="0.14"/><stop offset="1" stop-color="#a78bfa" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="1.5" stdDeviation="2.5" flood-color="#22d3ee" flood-opacity="0.22"/>
+    </filter>
+    <filter id="cellglow" x="-150%" y="-150%" width="400%" height="400%">
+      <feDropShadow dx="0" dy="0" stdDeviation="1.6" flood-color="#a78bfa" flood-opacity="0.9"/>
+    </filter>
+    <clipPath id="clip"><rect x="0.5" y="0.5" width="449" height="183" rx="8"/></clipPath>
+  </defs>
+  <style>
+    .fade { opacity: 0; animation: fadeUp 0.5s ease-out forwards; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+    .beam { animation: beam 7s linear infinite; }
+    @keyframes beam { to { stroke-dashoffset: -100; } }
+    @media (prefers-reduced-motion: reduce) { .fade { opacity: 1; animation: none; } .beam { animation: none; opacity: 0.3; } }
+  </style>
+  <rect x="0.5" y="0.5" width="449" height="183" rx="8" fill="#0a0b16" stroke="#272945"/>
+  <g clip-path="url(#clip)">
+    <circle cx="414" cy="4" r="96" fill="url(#glowg)"/>
+    <circle cx="10" cy="184" r="70" fill="url(#glowg)"/>
+  </g>
+  <rect class="beam" x="0.5" y="0.5" width="449" height="183" rx="8" fill="none" stroke="url(#ag)" stroke-width="1" pathLength="100" stroke-dasharray="26 74" stroke-linecap="round" opacity="0.75"/>
+  <g class="fade" transform="translate(24, 21)">
+    <path d="M7 0 L8.6 5.4 L14 7 L8.6 8.6 L7 14 L5.4 8.6 L0 7 L5.4 5.4 Z" fill="#22d3ee"/>
+  </g>
+  <text class="fade" x="46" y="33" font-size="14" font-weight="600" fill="#22d3ee">octocat · shipped with AI</text>
+  <text class="fade" style="animation-delay:100ms" x="426" y="33" text-anchor="end" font-size="10" fill="#8b8ca7">in 4 public repos</text>
+    <g class="fade" style="animation-delay:150ms">
+      <rect x="24" y="62" width="118" height="62" rx="9" fill="#22d3ee" fill-opacity="0.06" stroke="#22d3ee" stroke-opacity="0.15" filter="url(#soft)"/>
+      <text x="83" y="93" text-anchor="middle" font-size="24" font-weight="800" fill="url(#ag)">≥42</text>
+      <text x="83" y="110" text-anchor="middle" font-size="10" fill="#8b8ca7">AI-assisted commits</text>
+    </g>
+    <g class="fade" style="animation-delay:270ms">
+      <rect x="166" y="62" width="118" height="62" rx="9" fill="#22d3ee" fill-opacity="0.1" stroke="#22d3ee" stroke-opacity="0.22" filter="url(#soft)"/>
+      <text x="225" y="93" text-anchor="middle" font-size="24" font-weight="800" fill="url(#ag)">≥17</text>
+      <text x="225" y="110" text-anchor="middle" font-size="10" fill="#8b8ca7">merged PRs</text>
+    </g>
+    <g class="fade" style="animation-delay:390ms">
+      <rect x="308" y="62" width="118" height="62" rx="9" fill="#22d3ee" fill-opacity="0.15" stroke="#22d3ee" stroke-opacity="0.3" filter="url(#soft)"/>
+      <text x="367" y="93" text-anchor="middle" font-size="24" font-weight="800" fill="url(#ag)">3</text>
+      <text x="367" y="110" text-anchor="middle" font-size="10" fill="#8b8ca7">releases</text>
+    </g>
+    <path class="fade" style="animation-delay:330ms" d="M151.5 88.5 l5 4.5 -5 4.5" fill="none" stroke="#8b8ca7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    <path class="fade" style="animation-delay:450ms" d="M293.5 88.5 l5 4.5 -5 4.5" fill="none" stroke="#8b8ca7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    <text class="fade" style="animation-delay:420ms" x="24" y="142" font-size="10.5" fill="#8b8ca7">with <tspan fill="#22d3ee" font-weight="600">Claude</tspan><tspan fill="#8b8ca7"> ×31</tspan><tspan fill="#8b8ca7"> · </tspan><tspan fill="#22d3ee" font-weight="600">GitHub Copilot</tspan><tspan fill="#8b8ca7"> ×8</tspan><tspan fill="#8b8ca7"> · </tspan><tspan fill="#22d3ee" font-weight="600">OpenAI Codex</tspan><tspan fill="#8b8ca7"> ×3</tspan></text>
+  <a href="https://github.com/JinVibe/ai-usage-cards" target="_blank">
+    <text x="426" y="170" text-anchor="end" font-size="9" fill="#8b8ca7" fill-opacity="0.8">made with ai-usage-cards</text>
+  </a>
+</svg>

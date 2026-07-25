@@ -32,7 +32,11 @@ describe('renderUsageCard', () => {
   });
 
   it('renders a 26-week heatmap grid', () => {
-    expect(svg.match(/rx="2" fill="#0969da"/g)?.length).toBeGreaterThanOrEqual(26 * 7);
+    expect(svg.match(/class="hm"/g)?.length).toBe(26 * 7);
+  });
+
+  it('renders peak days in the gradient end color with a glow', () => {
+    expect(svg).toContain(`fill="#8250df" filter="url(#cellglow)"`);
   });
 
   it('breaks usage down by month with labels and values', () => {

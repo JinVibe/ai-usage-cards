@@ -53,4 +53,10 @@ describe('resolveTheme', () => {
       expect(theme.accent).toBe(theme.title);
     }
   });
+
+  it('gives every theme a gradient end color', () => {
+    for (const theme of Object.values(themes)) {
+      expect(theme.accent2).toMatch(/^#[0-9a-f]{6}$/i);
+    }
+  });
 });
