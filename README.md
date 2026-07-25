@@ -45,7 +45,7 @@ Or paste this directly, replacing `YOUR_USERNAME`:
 |---|---|---|---|
 | ![light](docs/theme-light.svg) | ![dark](docs/theme-dark.svg) | ![dim](docs/theme-dim.svg) | ![neon](docs/theme-neon.svg) |
 
-New themes are welcome — add a token record in [`src/render/themes.ts`](src/render/themes.ts) (single-hue, please).
+New themes are welcome — add a token record in [`src/render/themes.ts`](src/render/themes.ts) (one accent gradient, no rainbows).
 
 ## What counts (and what doesn't)
 
@@ -62,7 +62,8 @@ or any leaderboard. This card shows *what you shipped with AI* — not how much 
 
 The outcome funnel is only half the story. The **usage card** is the AI-era contribution
 graph itself: a heatmap of your actual daily AI usage across Claude Code, Codex, Gemini CLI,
-and friends — with streaks, monthly totals, and a tool-share bar.
+and friends — with all-time totals, streaks, and a month-by-month breakdown. A `providers`
+filter shows only the AI tools you choose.
 
 <p align="center">
   <picture>
@@ -117,18 +118,6 @@ https://ai-usage-cards-swart.vercel.app/api/usage-card?username=YOUR_USERNAME&gi
 Your gist id is safe to share — it only exposes the same numbers the card already shows.
 Keep the token private.
 
-Usage and combined card options:
-
-| Parameter | Values | Default | Notes |
-|---|---|---|---|
-| `username` | GitHub login | *(required)* | |
-| `gist` | your gist id | *(required)* | |
-| `providers` | e.g. `claude-code,codex` | all | Show only the AI tools you actually use — totals, heatmap, and monthly bars all follow the filter |
-| `theme` | `light`, `dark`, `dim`, `neon` | `light` | |
-
-The card leads with your **all-time total**, the **current month**, and a **month-by-month
-breakdown** of the last six months.
-
 **Step 5 — Automate it** so the card stays fresh:
 
 <details>
@@ -176,6 +165,16 @@ machine names are never shown on the card. The collector wraps
 [ccusage](https://github.com/ryoppippi/ccusage), which reads local logs from Claude Code,
 Codex CLI, Gemini CLI, Copilot CLI, and more (`AIUC_CMD` / `AIUC_PROVIDER` to customize).
 
+Usage, buddy, and combined card options — the card leads with your **all-time total**, the
+**current month**, and a **month-by-month breakdown** of the last six months:
+
+| Parameter | Values | Default | Notes |
+|---|---|---|---|
+| `username` | GitHub login | *(required)* | |
+| `gist` | your gist id | *(required)* | |
+| `providers` | e.g. `claude-code,codex` | all | Show only the AI tools you actually use — totals, heatmap, and monthly bars all follow the filter |
+| `theme` | `light`, `dark`, `dim`, `neon` | `light` | |
+
 ## The combined card — effort → outcome
 
 One card that tells the whole story: the usage heatmap (what you put in) stacked with the
@@ -195,12 +194,14 @@ https://ai-usage-cards-swart.vercel.app/api/combined-card?username=YOUR_USERNAME
 ## The AI buddy — a mascot that grows with you
 
 An original sparkle creature that levels up with your total recorded tokens — five
-evolution stages from a lone **Spark** to a crowned **Nova**. Sized to sit right beside
-the other cards.
+evolution stages from a lone **Spark** to a crowned **Nova** (shown here: Lv.1 → Lv.3 → Lv.5).
+Sized to sit right beside the other cards.
 
-| Lv.1 Spark | Lv.2 Ember | Lv.3 Circuit | Lv.4 Dynamo | Lv.5 Nova |
-|---|---|---|---|---|---|
-| ![lv1](docs/buddy-lv1.svg) | ![lv2](docs/buddy-lv2.svg) | ![lv3](docs/buddy-lv3.svg) | ![lv4](docs/buddy-lv4.svg) | ![lv5](docs/buddy-lv5.svg) |
+<p align="center">
+  <img src="docs/buddy-lv1.svg" alt="Buddy level 1: Spark" width="230">
+  <img src="docs/buddy-lv3.svg" alt="Buddy level 3: Circuit" width="230">
+  <img src="docs/buddy-lv5.svg" alt="Buddy level 5: Nova" width="230">
+</p>
 
 ```
 https://ai-usage-cards-swart.vercel.app/api/buddy-card?username=YOUR_USERNAME&gist=YOUR_GIST_ID&theme=dark

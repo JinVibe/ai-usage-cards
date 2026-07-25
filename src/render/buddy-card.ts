@@ -56,50 +56,69 @@ function eyes(theme: Theme, dx: number, y: number, r = 3): string {
   return `<circle cx="${-dx}" cy="${y}" r="${r}" fill="${theme.bg}"/><circle cx="${dx}" cy="${y}" r="${r}" fill="${theme.bg}"/>`;
 }
 
-function robotHead(theme: Theme, w: number, h: number, y: number): string {
-  return `
-      <line x1="0" y1="${y - h / 2 - 12}" x2="0" y2="${y - h / 2}" stroke="${theme.accent}" stroke-width="2"/>
-      <g transform="translate(0, ${y - h / 2 - 14})">${sparkle(theme, 0.9)}</g>
-      <rect x="${-w / 2}" y="${y - h / 2}" width="${w}" height="${h}" rx="12" fill="${theme.accent}" fill-opacity="0.16" stroke="${theme.accent}" stroke-width="1.5"/>
-      <circle cx="-11" cy="${y - 4}" r="4" fill="${theme.accent}"/><circle cx="11" cy="${y - 4}" r="4" fill="${theme.accent}"/>
-      <path d="M-8 ${y + 10} Q0 ${y + 16} 8 ${y + 10}" fill="none" stroke="${theme.accent}" stroke-width="2" stroke-linecap="round"/>`;
+/** Everything stands on this local ground line so no stage floats. */
+const GROUND = 48;
+
+function ground(theme: Theme, rx: number): string {
+  return `<ellipse cx="0" cy="${GROUND}" rx="${rx}" ry="4" fill="${theme.accent}" fill-opacity="0.12"/>`;
 }
 
-/** Evolution stages, each drawn centered on (0,0) in a ~90px box. */
+/** A robot head whose BOTTOM edge sits at `bottom`. */
+function robotHead(theme: Theme, w: number, h: number, bottom: number): string {
+  const top = bottom - h;
+  const eyeY = bottom - h * 0.55;
+  return `
+      <line x1="0" y1="${top - 11}" x2="0" y2="${top}" stroke="${theme.accent}" stroke-width="2"/>
+      <g transform="translate(0, ${top - 13})">${sparkle(theme, 0.9)}</g>
+      <rect x="${-w / 2}" y="${top}" width="${w}" height="${h}" rx="12" fill="${theme.accent}" fill-opacity="0.16" stroke="${theme.accent}" stroke-width="1.5"/>
+      <circle cx="-11" cy="${eyeY}" r="4" fill="${theme.accent}"/><circle cx="11" cy="${eyeY}" r="4" fill="${theme.accent}"/>
+      <path d="M-8 ${eyeY + 13} Q0 ${eyeY + 19} 8 ${eyeY + 13}" fill="none" stroke="${theme.accent}" stroke-width="2" stroke-linecap="round"/>`;
+}
+
+/**
+ * Evolution stages, drawn in art-local coordinates where y=GROUND is the
+ * floor every stage stands on — consistent placement across all levels.
+ */
 function buddyArt(level: number, theme: Theme): string {
   switch (level) {
-    case 1: // Spark — a lone sparkle
+    case 1: { // Spark — a lone sparkle resting on the ground
+      const s = 3.2;
       return `
-      ${sparkle(theme, 3.4, 0.9)}
-      <ellipse cx="0" cy="34" rx="18" ry="4" fill="${theme.accent}" fill-opacity="0.12"/>`;
-    case 2: // Ember — the sparkle wakes up
+      <g transform="translate(0, ${GROUND - 4 - 7 * s})">${sparkle(theme, s, 0.9)}</g>
+      ${ground(theme, 18)}`;
+    }
+    case 2: { // Ember — the sparkle wakes up
+      const s = 4.4;
+      const cy = GROUND - 6 - 7 * s;
       return `
-      ${sparkle(theme, 4.6, 0.95)}
-      ${eyes(theme, 7, -4)}
-      <ellipse cx="0" cy="40" rx="22" ry="4" fill="${theme.accent}" fill-opacity="0.12"/>`;
+      <g transform="translate(0, ${cy})">${sparkle(theme, s, 0.95)}</g>
+      <g transform="translate(0, ${cy})">${eyes(theme, 7.5, 2, 3.2)}</g>
+      <path d="M-6 ${cy + 11} Q0 ${cy + 15} 6 ${cy + 11}" fill="none" stroke="${theme.bg}" stroke-width="2" stroke-linecap="round"/>
+      ${ground(theme, 22)}`;
+    }
     case 3: // Circuit — it grows a head
       return `
-      ${robotHead(theme, 62, 54, 2)}
-      <ellipse cx="0" cy="44" rx="26" ry="4" fill="${theme.accent}" fill-opacity="0.12"/>`;
+      ${robotHead(theme, 62, 52, GROUND - 4)}
+      ${ground(theme, 30)}`;
     case 4: // Dynamo — a body and arms
       return `
-      ${robotHead(theme, 54, 42, -16)}
-      <rect x="-20" y="12" width="40" height="30" rx="10" fill="${theme.accent}" fill-opacity="0.16" stroke="${theme.accent}" stroke-width="1.5"/>
-      <g transform="translate(0, 27)">${sparkle(theme, 0.8)}</g>
-      <line x1="-20" y1="20" x2="-32" y2="30" stroke="${theme.accent}" stroke-width="2.5" stroke-linecap="round"/>
-      <line x1="20" y1="20" x2="32" y2="30" stroke="${theme.accent}" stroke-width="2.5" stroke-linecap="round"/>
-      <ellipse cx="0" cy="48" rx="28" ry="4" fill="${theme.accent}" fill-opacity="0.12"/>`;
-    default: // Nova — crowned, with companions
+      ${robotHead(theme, 52, 40, GROUND - 34)}
+      <rect x="-19" y="${GROUND - 32}" width="38" height="28" rx="10" fill="${theme.accent}" fill-opacity="0.16" stroke="${theme.accent}" stroke-width="1.5"/>
+      <g transform="translate(0, ${GROUND - 18})">${sparkle(theme, 0.8)}</g>
+      <line x1="-19" y1="${GROUND - 26}" x2="-31" y2="${GROUND - 16}" stroke="${theme.accent}" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="19" y1="${GROUND - 26}" x2="31" y2="${GROUND - 16}" stroke="${theme.accent}" stroke-width="2.5" stroke-linecap="round"/>
+      ${ground(theme, 28)}`;
+    default: // Nova — crowned, arms raised, with companions
       return `
-      <g transform="translate(-42, -30)">${sparkle(theme, 1.1, 0.55)}</g>
-      <g transform="translate(44, -14)">${sparkle(theme, 0.9, 0.55)}</g>
-      ${robotHead(theme, 54, 42, -12)}
-      <path d="M-16 -40 L-10 -50 L-4 -40 L0 -52 L4 -40 L10 -50 L16 -40 Z" fill="${theme.accent}" fill-opacity="0.85"/>
-      <rect x="-20" y="16" width="40" height="30" rx="10" fill="${theme.accent}" fill-opacity="0.16" stroke="${theme.accent}" stroke-width="1.5"/>
-      <g transform="translate(0, 31)">${sparkle(theme, 0.8)}</g>
-      <line x1="-20" y1="24" x2="-32" y2="16" stroke="${theme.accent}" stroke-width="2.5" stroke-linecap="round"/>
-      <line x1="20" y1="24" x2="32" y2="16" stroke="${theme.accent}" stroke-width="2.5" stroke-linecap="round"/>
-      <ellipse cx="0" cy="52" rx="28" ry="4" fill="${theme.accent}" fill-opacity="0.12"/>`;
+      <g transform="translate(-46, ${GROUND - 62})">${sparkle(theme, 1.1, 0.55)}</g>
+      <g transform="translate(46, ${GROUND - 48})">${sparkle(theme, 0.9, 0.55)}</g>
+      ${robotHead(theme, 52, 40, GROUND - 34)}
+      <path d="M-15 ${GROUND - 76} L-9 ${GROUND - 86} L-3 ${GROUND - 76} L0 ${GROUND - 88} L3 ${GROUND - 76} L9 ${GROUND - 86} L15 ${GROUND - 76} Z" transform="translate(0, 2)" fill="url(#ag)"/>
+      <rect x="-19" y="${GROUND - 32}" width="38" height="28" rx="10" fill="${theme.accent}" fill-opacity="0.16" stroke="${theme.accent}" stroke-width="1.5"/>
+      <g transform="translate(0, ${GROUND - 18})">${sparkle(theme, 0.8)}</g>
+      <line x1="-19" y1="${GROUND - 26}" x2="-31" y2="${GROUND - 36}" stroke="${theme.accent}" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="19" y1="${GROUND - 26}" x2="31" y2="${GROUND - 36}" stroke="${theme.accent}" stroke-width="2.5" stroke-linecap="round"/>
+      ${ground(theme, 28)}`;
   }
 }
 
@@ -115,7 +134,8 @@ export function renderBuddyCard(username: string, data: UsageData, theme: Theme)
   const title = truncateToWidth(`${username} · AI buddy`, BUDDY_CARD_WIDTH - CARD_PADDING * 2, 13);
   let body = `
   <text class="fade" x="${cx}" y="32" text-anchor="middle" font-size="13" font-weight="600" fill="${theme.title}">${escapeXml(title)}</text>
-  <g class="fade" style="animation-delay:150ms" transform="translate(${cx}, 112)" filter="url(#soft)">${buddyArt(lvl.level, theme)}</g>
+  <circle class="fade" style="animation-delay:100ms" cx="${cx}" cy="124" r="62" fill="url(#glowg)"/>
+  <g class="fade" style="animation-delay:150ms" transform="translate(${cx}, 112)">${buddyArt(lvl.level, theme)}</g>
   <text class="fade" style="animation-delay:300ms" x="${cx}" y="184" text-anchor="middle" font-size="14" font-weight="700" fill="url(#ag)">Lv.${lvl.level} · ${escapeXml(lvl.name)}</text>
   <text class="fade" style="animation-delay:350ms" x="${cx}" y="201" text-anchor="middle" font-size="10" fill="${theme.muted}">${escapeXml(formatTokens(total))} tokens</text>`;
 
