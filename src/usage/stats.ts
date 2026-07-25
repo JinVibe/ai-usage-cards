@@ -30,6 +30,28 @@ export function totalTokens(data: UsageData): number {
   return total;
 }
 
+/** Detail stats for the second summary line. */
+export function usageDetails(data: UsageData): {
+  activeDays: number;
+  avgPerActiveDay: number;
+  bestDay: number;
+} {
+  let activeDays = 0;
+  let bestDay = 0;
+  let total = 0;
+  for (const day of data.days.values()) {
+    if (day.tokens <= 0) continue;
+    activeDays++;
+    total += day.tokens;
+    if (day.tokens > bestDay) bestDay = day.tokens;
+  }
+  return {
+    activeDays,
+    avgPerActiveDay: activeDays === 0 ? 0 : Math.round(total / activeDays),
+    bestDay,
+  };
+}
+
 const MONTH_LABELS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 /**

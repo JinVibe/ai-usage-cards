@@ -6,6 +6,7 @@ import {
   monthTotals,
   monthlyTotals,
   totalTokens,
+  usageDetails,
 } from '../usage/stats.js';
 import { cardShell } from './card.js';
 import { CARD_PADDING, CARD_WIDTH, FOOTER_HEIGHT, HEADER_HEIGHT } from './layout.js';
@@ -18,12 +19,12 @@ const CELL_GAP = 2;
 export const GRID_WIDTH = WEEKS * (CELL + CELL_GAP) - CELL_GAP; // 310
 export const GRID_HEIGHT = 7 * (CELL + CELL_GAP) - CELL_GAP; // 82
 
-const SUMMARY_HEIGHT = 24;
+const SUMMARY_HEIGHT = 42;
 const HEATMAP_BLOCK = GRID_HEIGHT + 10;
-const MONTHS_BLOCK = 42;
+const MONTHS_BLOCK = 40;
 const MONTHS_SHOWN = 6;
 
-/** 244px — kept equal to the outcome card (funnel + repo slots). */
+/** 260px — kept equal to the outcome card (funnel + agents + repo slots). */
 export const USAGE_CARD_HEIGHT =
   HEADER_HEIGHT + SUMMARY_HEIGHT + HEATMAP_BLOCK + MONTHS_BLOCK + FOOTER_HEIGHT;
 
@@ -40,6 +41,17 @@ export function summaryLine(data: UsageData, now: Date): string {
   const streak = currentStreak(data, now);
   if (streak > 0) parts.push(`${streak}-day streak`);
   return parts.join(' · ');
+}
+
+/** `avg 388k/day · best day 800k · 41 active days` */
+export function detailLine(data: UsageData): string {
+  const details = usageDetails(data);
+  if (details.activeDays === 0) return '';
+  return [
+    `avg ${formatTokens(details.avgPerActiveDay)}/day`,
+    `best day ${formatTokens(details.bestDay)}`,
+    `${details.activeDays} active day${details.activeDays === 1 ? '' : 's'}`,
+  ].join(' · ');
 }
 
 export function renderHeatmap(data: UsageData, theme: Theme, x: number, y: number, now: Date): string {
@@ -113,7 +125,8 @@ export function renderUsageCard(
   }
 
   body += `
-  <text class="fade" style="animation-delay:150ms" x="${CARD_PADDING}" y="${summaryY}" font-size="12" fill="${theme.text}">${escapeXml(summaryLine(data, now))}</text>`;
+  <text class="fade" style="animation-delay:150ms" x="${CARD_PADDING}" y="${summaryY}" font-size="12" fill="${theme.text}">${escapeXml(summaryLine(data, now))}</text>
+  <text class="fade" style="animation-delay:200ms" x="${CARD_PADDING}" y="${summaryY + 17}" font-size="10" fill="${theme.muted}">${escapeXml(detailLine(data))}</text>`;
   body += renderHeatmap(data, theme, gridX, gridY, now);
   body += renderMonthlyBars(data, theme, monthsY, now);
 

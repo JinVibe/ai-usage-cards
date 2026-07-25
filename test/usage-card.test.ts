@@ -27,6 +27,10 @@ describe('renderUsageCard', () => {
     expect(svg).toContain('Total: 1.6M tokens · This month: 1.2M · 3-day streak');
   });
 
+  it('shows the detail line with average, best day, and active days', () => {
+    expect(svg).toContain('avg 388k/day · best day 800k · 4 active days');
+  });
+
   it('renders a 26-week heatmap grid', () => {
     expect(svg.match(/rx="2" fill="#0969da"/g)?.length).toBeGreaterThanOrEqual(26 * 7);
   });
