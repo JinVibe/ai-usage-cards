@@ -3,86 +3,166 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ai-usage-cards — card builder</title>
-  <meta name="description" content="Build your AI-assisted shipping card and embed it in your GitHub README in seconds." />
+  <title>ai-usage-cards — the AI-era contribution graph</title>
+  <meta name="description" content="Build your AI usage and shipping cards and embed them in your GitHub README in seconds." />
   <style>
     :root {
-      --bg: #ffffff; --text: #24292f; --muted: #6e7781;
-      --border: #d0d7de; --accent: #0969da; --panel: #f6f8fa;
-    }
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg: #0d1117; --text: #c9d1d9; --muted: #8b949e;
-        --border: #30363d; --accent: #58a6ff; --panel: #161b22;
-      }
+      --bg: #07070f; --panel: rgba(255,255,255,0.04); --panel-border: rgba(255,255,255,0.09);
+      --text: #e7e7f2; --muted: #8b8ca7; --a1: #22d3ee; --a2: #a78bfa;
     }
     * { box-sizing: border-box; }
+    html, body { height: 100%; }
     body {
       margin: 0; background: var(--bg); color: var(--text);
       font: 15px/1.6 'Segoe UI', Ubuntu, Helvetica, Arial, sans-serif;
-      display: flex; justify-content: center; padding: 40px 16px;
+      overflow-x: hidden;
     }
-    main { width: 100%; max-width: 640px; }
-    h1 { font-size: 24px; margin: 0 0 4px; }
-    .tagline { color: var(--muted); margin: 0 0 28px; }
-    .row { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 16px; align-items: center; }
-    label { font-size: 13px; color: var(--muted); }
-    input[type="text"] {
-      flex: 1; min-width: 220px; padding: 8px 12px; font-size: 15px;
-      background: var(--bg); color: var(--text);
-      border: 1px solid var(--border); border-radius: 6px; outline: none;
+    /* layered background: grid + aurora blobs + particles canvas */
+    .bg-grid {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+      background-size: 44px 44px;
+      mask-image: radial-gradient(ellipse 90% 60% at 50% 0%, #000 55%, transparent 100%);
+      -webkit-mask-image: radial-gradient(ellipse 90% 60% at 50% 0%, #000 55%, transparent 100%);
     }
-    input[type="text"]:focus { border-color: var(--accent); }
-    select {
-      padding: 8px 10px; font-size: 14px; background: var(--bg); color: var(--text);
-      border: 1px solid var(--border); border-radius: 6px;
+    .aurora {
+      position: fixed; z-index: 0; pointer-events: none; filter: blur(90px); opacity: .35;
+      border-radius: 50%;
     }
-    .check { display: inline-flex; gap: 6px; align-items: center; font-size: 14px; color: var(--text); }
+    .aurora.one { width: 480px; height: 480px; left: -120px; top: -160px; background: var(--a2); }
+    .aurora.two { width: 420px; height: 420px; right: -100px; top: 80px; background: var(--a1); }
+    #particles { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+
+    main { position: relative; z-index: 1; max-width: 760px; margin: 0 auto; padding: 64px 20px 80px; }
+    .badge {
+      display: inline-flex; align-items: center; gap: 7px; font-size: 12.5px; color: var(--muted);
+      border: 1px solid var(--panel-border); border-radius: 999px; padding: 5px 14px;
+      background: var(--panel); margin-bottom: 22px;
+    }
+    .badge .dot { width: 6px; height: 6px; border-radius: 50%; background: linear-gradient(135deg, var(--a1), var(--a2)); }
+    h1 {
+      font-size: clamp(30px, 6vw, 46px); line-height: 1.15; margin: 0 0 14px; font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    .grad {
+      background: linear-gradient(90deg, var(--a1), var(--a2), var(--a1));
+      background-size: 200% 100%; -webkit-background-clip: text; background-clip: text; color: transparent;
+      animation: gradmove 6s linear infinite;
+    }
+    @keyframes gradmove { to { background-position: 200% 0; } }
+    .tagline { color: var(--muted); margin: 0 0 34px; max-width: 560px; }
+
+    .tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 18px; }
+    .tab {
+      padding: 7px 16px; font-size: 13.5px; cursor: pointer; color: var(--muted);
+      background: transparent; border: 1px solid var(--panel-border); border-radius: 999px;
+      transition: all .18s ease;
+    }
+    .tab:hover { color: var(--text); border-color: rgba(255,255,255,0.22); }
+    .tab.active {
+      color: #0a0b16; font-weight: 700; border-color: transparent;
+      background: linear-gradient(90deg, var(--a1), var(--a2));
+    }
+
+    .row { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 12px; }
+    input[type="text"], select {
+      padding: 10px 14px; font-size: 14.5px; color: var(--text);
+      background: var(--panel); border: 1px solid var(--panel-border); border-radius: 10px; outline: none;
+      transition: border-color .15s ease;
+    }
+    input[type="text"]:focus { border-color: var(--a1); }
+    #username { flex: 1; min-width: 200px; }
+    #gist { flex: 1.4; min-width: 240px; }
+    #providers { flex: 1; min-width: 180px; }
+    select { cursor: pointer; }
+    select option { background: #12131f; }
+    .hint { font-size: 12px; color: var(--muted); margin: -4px 0 12px; }
+    .hint a { color: var(--a1); text-decoration: none; }
+
     .preview {
-      background: var(--panel); border: 1px solid var(--border); border-radius: 8px;
-      padding: 24px; display: flex; justify-content: center; min-height: 160px;
-      align-items: center; margin-bottom: 16px;
+      position: relative; background: var(--panel); border: 1px solid var(--panel-border);
+      border-radius: 14px; padding: 26px; display: flex; justify-content: center; align-items: center;
+      min-height: 200px; margin: 16px 0; overflow: hidden;
     }
+    .preview::before {
+      content: ''; position: absolute; inset: -1px; border-radius: 14px; padding: 1px; pointer-events: none;
+      background: linear-gradient(120deg, transparent 20%, var(--a1), var(--a2), transparent 80%);
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor; mask-composite: exclude;
+      opacity: .0; transition: opacity .4s ease;
+    }
+    .preview.live::before { opacity: .55; }
     .preview img { max-width: 100%; }
     .preview .placeholder { color: var(--muted); font-size: 14px; }
+
     pre {
-      background: var(--panel); border: 1px solid var(--border); border-radius: 8px;
-      padding: 16px; overflow-x: auto; font-size: 12.5px; white-space: pre-wrap;
-      word-break: break-all; margin: 0 0 12px;
+      background: rgba(255,255,255,0.03); border: 1px solid var(--panel-border); border-radius: 12px;
+      padding: 16px; overflow-x: auto; font-size: 12.5px; white-space: pre-wrap; word-break: break-all;
+      margin: 0 0 12px; color: #c9cade;
     }
-    button {
-      padding: 8px 16px; font-size: 14px; font-weight: 600; cursor: pointer;
-      background: var(--accent); color: #fff; border: none; border-radius: 6px;
+    .shimmer-btn {
+      position: relative; padding: 11px 26px; font-size: 14.5px; font-weight: 700; cursor: pointer;
+      color: #0a0b16; border: none; border-radius: 10px; overflow: hidden;
+      background: linear-gradient(90deg, var(--a1), var(--a2));
     }
-    button:disabled { opacity: 0.5; cursor: default; }
-    footer { margin-top: 32px; font-size: 13px; color: var(--muted); }
-    footer a { color: var(--accent); }
+    .shimmer-btn::after {
+      content: ''; position: absolute; top: 0; left: -60%; width: 40%; height: 100%;
+      background: linear-gradient(100deg, transparent, rgba(255,255,255,0.55), transparent);
+      animation: shimmer 2.6s ease-in-out infinite;
+    }
+    @keyframes shimmer { 0% { left: -60%; } 55%, 100% { left: 120%; } }
+    footer { margin-top: 44px; font-size: 13px; color: var(--muted); }
+    footer a { color: var(--a1); text-decoration: none; }
+    @media (prefers-reduced-motion: reduce) {
+      .grad, .shimmer-btn::after { animation: none; }
+    }
   </style>
 </head>
 <body>
+  <div class="bg-grid"></div>
+  <div class="aurora one"></div>
+  <div class="aurora two"></div>
+  <canvas id="particles"></canvas>
+
   <main>
-    <h1>ai-usage-cards</h1>
-    <p class="tagline">The AI-era contribution graph — show what you shipped with AI, straight from your public git history.</p>
+    <span class="badge"><span class="dot"></span> free · open source · one-URL embed</span>
+    <h1>The <span class="grad">AI-era</span> contribution graph</h1>
+    <p class="tagline">Green squares showed that you code. These cards show how you build with AI —
+    what you shipped, how much you run, and the buddy that grows with you.</p>
+
+    <div class="tabs" id="tabs">
+      <button class="tab active" data-card="card">Shipped with AI</button>
+      <button class="tab" data-card="usage-card">Usage heatmap</button>
+      <button class="tab" data-card="buddy-card">AI buddy</button>
+      <button class="tab" data-card="combined-card">Combined</button>
+    </div>
 
     <div class="row">
-      <input id="username" type="text" placeholder="Your GitHub username" autocomplete="off" spellcheck="false" autofocus />
+      <input id="username" type="text" placeholder="GitHub username" autocomplete="off" spellcheck="false" autofocus />
       <select id="theme" aria-label="Theme">
+        <option value="dark" selected>dark</option>
         <option value="light">light</option>
-        <option value="dark">dark</option>
         <option value="dim">dim</option>
+        <option value="neon">neon</option>
       </select>
-      <label class="check"><input id="repos" type="checkbox" /> repo case cards</label>
     </div>
+    <div class="row" id="gistRow" hidden>
+      <input id="gist" type="text" placeholder="Usage gist id" autocomplete="off" spellcheck="false" />
+      <input id="providers" type="text" placeholder="providers (optional): claude-code,codex" autocomplete="off" spellcheck="false" />
+    </div>
+    <p class="hint" id="gistHint" hidden>Needs the 5-minute collector setup — <a href="https://github.com/JinVibe/ai-usage-cards#show-your-usage-too--the-heatmap-card" target="_blank">guide</a> · or let <a href="https://github.com/JinVibe/ai-usage-cards#-let-your-ai-agent-set-everything-up" target="_blank">your AI agent do it</a>.</p>
 
     <div class="preview" id="preview">
       <span class="placeholder">Type your username to preview your card</span>
     </div>
 
     <pre id="snippet" hidden></pre>
-    <button id="copy" hidden>Copy markdown</button>
+    <button id="copy" class="shimmer-btn" hidden>Copy markdown</button>
 
     <footer>
-      Auto light/dark: the snippet uses <code>&lt;picture&gt;</code> so GitHub picks the right theme.
+      Auto light/dark via <code>&lt;picture&gt;</code> — GitHub picks the right theme
       · <a href="https://github.com/JinVibe/ai-usage-cards">GitHub</a>
     </footer>
   </main>
