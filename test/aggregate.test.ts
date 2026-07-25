@@ -77,6 +77,20 @@ describe('buildCardData', () => {
     expect(data.repoCases).toHaveLength(3);
   });
 
+  it('counts commits per agent, largest first', () => {
+    const mixed = [
+      { ...commit('u/app', 'x1'), signatureIds: ['claude'] },
+      { ...commit('u/app', 'x2'), signatureIds: ['claude', 'copilot'] },
+      { ...commit('u/lib', 'x3'), signatureIds: ['copilot'] },
+      { ...commit('u/lib', 'x4'), signatureIds: ['copilot'] },
+    ];
+    const result = buildCardData('u', mixed, { repos: new Map() });
+    expect(result.agentCounts).toEqual([
+      { id: 'copilot', commits: 3 },
+      { id: 'claude', commits: 2 },
+    ]);
+  });
+
   it('handles zero commits', () => {
     const data = buildCardData('u', [], { repos: new Map() });
     expect(data.commits).toBe(0);

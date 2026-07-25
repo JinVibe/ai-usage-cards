@@ -23,6 +23,7 @@ const outcome: CardData = {
   releases: 3,
   repoCount: 4,
   repoCases: [],
+  agentCounts: [{ id: 'claude', commits: 42 }],
   truncated: false,
 };
 
@@ -40,7 +41,7 @@ describe('renderCombinedCard', () => {
   });
 
   it('uses the outcome-first title wording', () => {
-    expect(svg).toContain('directed AI to ship');
+    expect(svg).toContain('shipped with AI');
   });
 
   it('has the fixed combined height', () => {

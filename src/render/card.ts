@@ -66,8 +66,8 @@ export function cardShell(
 
 /**
  * Renders the full stats card: header, the requested modules in order, footer.
- * Wording rules (design doc): "directed AI to ship" — outcomes, not volume.
- * By construction nothing here receives an email address.
+ * Wording rules (design doc): outcomes, not volume — "shipped with AI",
+ * never "AI wrote my code". By construction nothing here receives an email.
  */
 export function renderCard(data: CardData, theme: Theme, moduleNames: string[]): string {
   const active = moduleNames
@@ -84,7 +84,7 @@ export function renderCard(data: CardData, theme: Theme, moduleNames: string[]):
   const noteWidth = repoNote ? approxTextWidth(repoNote, 10) + 12 : 0;
   const titleX = CARD_PADDING + 22;
   const title = truncateToWidth(
-    `${data.username} · directed AI to ship`,
+    `${data.username} · shipped with AI`,
     CARD_WIDTH - titleX - CARD_PADDING - noteWidth,
     14,
   );

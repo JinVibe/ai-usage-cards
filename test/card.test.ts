@@ -13,6 +13,10 @@ const data: CardData = {
     { repo: 'octo/app', commits: 20, latestReleaseTag: 'v1.2.0' },
     { repo: 'octo/lib', commits: 9, latestReleaseTag: null },
   ],
+  agentCounts: [
+    { id: 'claude', commits: 30 },
+    { id: 'copilot', commits: 12 },
+  ],
   truncated: false,
 };
 
@@ -30,8 +34,21 @@ describe('renderCard', () => {
 
   it('uses outcome-first wording, never "AI wrote"', () => {
     const svg = renderCard(data, light, ['funnel', 'repos']);
-    expect(svg).toContain('directed AI to ship');
+    expect(svg).toContain('shipped with AI');
     expect(svg.toLowerCase()).not.toContain('ai wrote');
+  });
+
+  it('names the directed agents with friendly labels and counts', () => {
+    const svg = renderCard(data, light, ['funnel']);
+    expect(svg).toContain('Claude</tspan>');
+    expect(svg).toContain('×30');
+    expect(svg).toContain('GitHub Copilot</tspan>');
+    expect(svg).toContain('×12');
+  });
+
+  it('omits the agents line when there are none', () => {
+    const svg = renderCard({ ...data, agentCounts: [] }, light, ['funnel']);
+    expect(svg).not.toContain('with <tspan');
   });
 
   it('renders repo case rows only when the repos module is requested', () => {

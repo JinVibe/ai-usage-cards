@@ -37,6 +37,8 @@ export interface CardData {
   repoCount: number;
   /** Top repos for the opt-in "repos" module, best first. */
   repoCases: RepoCase[];
+  /** Commits per matched AI agent, largest first. Safe to render (ids only). */
+  agentCounts: { id: string; commits: number }[];
   /** True when the commit search was truncated at the page cap. */
   truncated: boolean;
 }

@@ -69,6 +69,16 @@ export function buildCardData(
     latestReleaseTag: enrichment.repos.get(repo)?.latestReleaseTag ?? null,
   }));
 
+  const byAgent = new Map<string, number>();
+  for (const commit of commits) {
+    for (const id of commit.signatureIds) {
+      byAgent.set(id, (byAgent.get(id) ?? 0) + 1);
+    }
+  }
+  const agentCounts = [...byAgent.entries()]
+    .map(([id, count]) => ({ id, commits: count }))
+    .sort((a, b) => b.commits - a.commits || a.id.localeCompare(b.id));
+
   return {
     username,
     commits: commits.length,
@@ -76,6 +86,7 @@ export function buildCardData(
     releases,
     repoCount: byRepo.size,
     repoCases,
+    agentCounts,
     truncated: options.truncated ?? false,
   };
 }

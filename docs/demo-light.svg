@@ -1,51 +1,52 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="450" height="244" viewBox="0 0 450 244" role="img" aria-label="octocat: at least 42 AI-assisted commits, at least 17 merged PRs, 3 releases" font-family="'Segoe UI', Ubuntu, Helvetica, Arial, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" width="450" height="260" viewBox="0 0 450 260" role="img" aria-label="octocat: at least 42 AI-assisted commits, at least 17 merged PRs, 3 releases" font-family="'Segoe UI', Ubuntu, Helvetica, Arial, sans-serif">
   <style>
     .fade { opacity: 0; animation: fadeUp 0.5s ease-out forwards; }
     @keyframes fadeUp { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
     @media (prefers-reduced-motion: reduce) { .fade { opacity: 1; animation: none; } }
   </style>
-  <rect x="0.5" y="0.5" width="449" height="243" rx="8" fill="#ffffff" stroke="#e4e2e2"/>
+  <rect x="0.5" y="0.5" width="449" height="259" rx="8" fill="#ffffff" stroke="#e4e2e2"/>
   <g class="fade" transform="translate(24, 21)">
     <path d="M7 0 L8.6 5.4 L14 7 L8.6 8.6 L7 14 L5.4 8.6 L0 7 L5.4 5.4 Z" fill="#0969da"/>
   </g>
-  <text class="fade" x="46" y="33" font-size="14" font-weight="600" fill="#0969da">octocat · directed AI to ship</text>
+  <text class="fade" x="46" y="33" font-size="14" font-weight="600" fill="#0969da">octocat · shipped with AI</text>
   <text class="fade" style="animation-delay:100ms" x="426" y="33" text-anchor="end" font-size="10" fill="#6e7781">in 4 public repos</text>
     <g class="fade" style="animation-delay:150ms">
-      <rect x="24" y="60" width="118" height="58" rx="8" fill="#0969da" fill-opacity="0.06" stroke="#0969da" stroke-opacity="0.15"/>
-      <text x="83" y="87" text-anchor="middle" font-size="20" font-weight="700" fill="#24292f">≥42</text>
-      <text x="83" y="104" text-anchor="middle" font-size="9.5" fill="#6e7781">AI-assisted commits</text>
+      <rect x="24" y="62" width="118" height="62" rx="9" fill="#0969da" fill-opacity="0.06" stroke="#0969da" stroke-opacity="0.15"/>
+      <text x="83" y="93" text-anchor="middle" font-size="24" font-weight="800" fill="#0969da">≥42</text>
+      <text x="83" y="110" text-anchor="middle" font-size="10" fill="#6e7781">AI-assisted commits</text>
     </g>
     <g class="fade" style="animation-delay:270ms">
-      <rect x="166" y="60" width="118" height="58" rx="8" fill="#0969da" fill-opacity="0.1" stroke="#0969da" stroke-opacity="0.22"/>
-      <text x="225" y="87" text-anchor="middle" font-size="20" font-weight="700" fill="#24292f">≥17</text>
-      <text x="225" y="104" text-anchor="middle" font-size="9.5" fill="#6e7781">merged PRs</text>
+      <rect x="166" y="62" width="118" height="62" rx="9" fill="#0969da" fill-opacity="0.1" stroke="#0969da" stroke-opacity="0.22"/>
+      <text x="225" y="93" text-anchor="middle" font-size="24" font-weight="800" fill="#0969da">≥17</text>
+      <text x="225" y="110" text-anchor="middle" font-size="10" fill="#6e7781">merged PRs</text>
     </g>
     <g class="fade" style="animation-delay:390ms">
-      <rect x="308" y="60" width="118" height="58" rx="8" fill="#0969da" fill-opacity="0.15" stroke="#0969da" stroke-opacity="0.3"/>
-      <text x="367" y="87" text-anchor="middle" font-size="20" font-weight="700" fill="#24292f">3</text>
-      <text x="367" y="104" text-anchor="middle" font-size="9.5" fill="#6e7781">releases</text>
+      <rect x="308" y="62" width="118" height="62" rx="9" fill="#0969da" fill-opacity="0.15" stroke="#0969da" stroke-opacity="0.3"/>
+      <text x="367" y="93" text-anchor="middle" font-size="24" font-weight="800" fill="#0969da">3</text>
+      <text x="367" y="110" text-anchor="middle" font-size="10" fill="#6e7781">releases</text>
     </g>
-    <path class="fade" style="animation-delay:330ms" d="M151.5 84.5 l5 4.5 -5 4.5" fill="none" stroke="#6e7781" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-    <path class="fade" style="animation-delay:450ms" d="M293.5 84.5 l5 4.5 -5 4.5" fill="none" stroke="#6e7781" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    <path class="fade" style="animation-delay:330ms" d="M151.5 88.5 l5 4.5 -5 4.5" fill="none" stroke="#6e7781" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    <path class="fade" style="animation-delay:450ms" d="M293.5 88.5 l5 4.5 -5 4.5" fill="none" stroke="#6e7781" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    <text class="fade" style="animation-delay:420ms" x="24" y="142" font-size="10.5" fill="#6e7781">with <tspan fill="#0969da" font-weight="600">Claude</tspan><tspan fill="#6e7781"> ×31</tspan><tspan fill="#6e7781"> · </tspan><tspan fill="#0969da" font-weight="600">GitHub Copilot</tspan><tspan fill="#6e7781"> ×8</tspan><tspan fill="#6e7781"> · </tspan><tspan fill="#0969da" font-weight="600">OpenAI Codex</tspan><tspan fill="#6e7781"> ×3</tspan></text>
     <g class="fade" style="animation-delay:450ms">
-      <circle cx="27" cy="147.5" r="2.5" fill="#0969da"/>
-      <text x="36" y="151" font-size="11" fill="#6e7781"><tspan fill="#0969da" font-weight="600">spark-app</tspan><tspan fill="#24292f"> — shipped v1.2.0 · ≥20 AI-assisted commits</tspan></text>
-      <rect x="362" y="146" width="64" height="4" rx="2" fill="#0969da" fill-opacity="0.12"/>
-      <rect x="362" y="146" width="64" height="4" rx="2" fill="#0969da" fill-opacity="0.55"/>
+      <circle cx="27" cy="161.5" r="2.5" fill="#0969da"/>
+      <text x="36" y="165" font-size="11" fill="#6e7781"><tspan fill="#0969da" font-weight="600">spark-app</tspan><tspan fill="#24292f"> — shipped v1.2.0 · ≥20 AI-assisted commits</tspan></text>
+      <rect x="362" y="160" width="64" height="4" rx="2" fill="#0969da" fill-opacity="0.12"/>
+      <rect x="362" y="160" width="64" height="4" rx="2" fill="#0969da" fill-opacity="0.55"/>
     </g>
     <g class="fade" style="animation-delay:550ms">
-      <circle cx="27" cy="167.5" r="2.5" fill="#0969da"/>
-      <text x="36" y="171" font-size="11" fill="#6e7781"><tspan fill="#0969da" font-weight="600">tiny-lib</tspan><tspan fill="#24292f"> · ≥9 AI-assisted commits</tspan></text>
-      <rect x="362" y="166" width="64" height="4" rx="2" fill="#0969da" fill-opacity="0.12"/>
-      <rect x="362" y="166" width="29" height="4" rx="2" fill="#0969da" fill-opacity="0.55"/>
+      <circle cx="27" cy="181.5" r="2.5" fill="#0969da"/>
+      <text x="36" y="185" font-size="11" fill="#6e7781"><tspan fill="#0969da" font-weight="600">tiny-lib</tspan><tspan fill="#24292f"> · ≥9 AI-assisted commits</tspan></text>
+      <rect x="362" y="180" width="64" height="4" rx="2" fill="#0969da" fill-opacity="0.12"/>
+      <rect x="362" y="180" width="29" height="4" rx="2" fill="#0969da" fill-opacity="0.55"/>
     </g>
     <g class="fade" style="animation-delay:650ms">
-      <circle cx="27" cy="187.5" r="2.5" fill="#0969da"/>
-      <text x="36" y="191" font-size="11" fill="#6e7781"><tspan fill="#0969da" font-weight="600">cli-tools</tspan><tspan fill="#24292f"> — shipped v0.3.1 · ≥6 AI-assisted commits</tspan></text>
-      <rect x="362" y="186" width="64" height="4" rx="2" fill="#0969da" fill-opacity="0.12"/>
-      <rect x="362" y="186" width="19" height="4" rx="2" fill="#0969da" fill-opacity="0.55"/>
+      <circle cx="27" cy="201.5" r="2.5" fill="#0969da"/>
+      <text x="36" y="205" font-size="11" fill="#6e7781"><tspan fill="#0969da" font-weight="600">cli-tools</tspan><tspan fill="#24292f"> — shipped v0.3.1 · ≥6 AI-assisted commits</tspan></text>
+      <rect x="362" y="200" width="64" height="4" rx="2" fill="#0969da" fill-opacity="0.12"/>
+      <rect x="362" y="200" width="19" height="4" rx="2" fill="#0969da" fill-opacity="0.55"/>
     </g>
   <a href="https://github.com/JinVibe/ai-usage-cards" target="_blank">
-    <text x="426" y="230" text-anchor="end" font-size="9" fill="#6e7781" fill-opacity="0.8">made with ai-usage-cards</text>
+    <text x="426" y="246" text-anchor="end" font-size="9" fill="#6e7781" fill-opacity="0.8">made with ai-usage-cards</text>
   </a>
 </svg>

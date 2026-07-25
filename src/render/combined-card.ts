@@ -45,7 +45,7 @@ export function renderCombinedCard(
   now: Date,
 ): string {
   const title = truncateToWidth(
-    `${username} · directed AI to ship`,
+    `${username} · shipped with AI`,
     CARD_WIDTH - CARD_PADDING * 2 - 120,
     14,
   );
